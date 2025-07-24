@@ -6,6 +6,7 @@ media_folder: "static/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
+  # BLOG POSTS
   - name: "blog"
     label: "Blog"
     folder: "posts"
@@ -15,3 +16,36 @@ collections:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Body", name: "body", widget: "markdown" }
+
+  # HOMEPAGE CONTENT
+  - name: "homepage"
+    label: "Homepage"
+    files:
+      - label: "Home Text"
+        name: "home_text"
+        file: "content/home.md"
+        fields:
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Intro Text", name: "intro", widget: "markdown" }
+
+  # ABOUT PAGE CONTENT
+  - name: "about"
+    label: "About Page"
+    files:
+      - label: "About Text"
+        name: "about_text"
+        file: "content/about.md"
+        fields:
+          - { label: "About Body", name: "body", widget: "markdown" }
+
+  # PDF FILE UPLOADER
+  - name: "downloads"
+    label: "Downloadables"
+    folder: "static/files"
+    media_folder: ""
+    public_folder: "/files"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "File", name: "file", widget: "file" }
