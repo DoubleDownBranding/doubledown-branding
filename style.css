@@ -1,1 +1,15 @@
-body { font-family: sans-serif; background-color: #fff; color: #111; }
+
+body {
+  font-family: Arial, sans-serif;
+  background: white;
+  color: #111;
+  margin: 40px;
+}
+nav a {
+  margin: 0 10px;
+  color: red;
+  text-decoration: none;
+}
+h1 {
+  color: blue;
+}
