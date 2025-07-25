@@ -1,0 +1,17 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' }
+];
+---
+
+<header style="padding: 1rem;">
+  <nav>
+    {navLinks.map(link => (
+      <a href={link.href}>{link.label}</a>
+    ))}
+    <span style="float: right; font-weight: bold;">DoubleDown</span>
+  </nav>
+</header>
