@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getEntryBySlug } from 'astro:content';
+const content = await getEntryBySlug('contact', 'contact');
+const { title, intro, thank_you } = content.data;
+---
+
+<BaseLayout>
+  <title slot="title">Contact - DoubleDown Branding</title>
+
+  <section style="padding: 4rem 1rem;">
+    <h1>{title}</h1>
+    <p>{intro}</p>
+
+    <form name="contact" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="contact" />
+      <label>Name <input type="text" name="name" required /></label>
+      <label>Email <input type="email" name="email" required /></label>
+      <label>Subject/Company <input type="text" name="subject" /></label>
+      <label>Message <textarea name="message"></textarea></label>
+      <button type="submit">Send</button>
+    </form>
+
+    <p>{thank_you}</p>
+  </section>
+</BaseLayout>
