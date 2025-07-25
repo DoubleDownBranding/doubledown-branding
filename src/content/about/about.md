@@ -1,6 +1,8 @@
 ---
-headline: Our Story our this yes
-cta_text: "click me me me me me "
-thank_you: Thanks! to me and noone else 23
+headline: Our Story
+body: |
+  This is the markdown text
+  That should show here.
+cta_text: Download Portfolio
+thank_you: Thanks for your interest!
 ---
-Please work
