@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntryBySlug } from 'astro:content';
+
+const { slug } = Astro.params;
+const post = await getEntryBySlug('blog', slug);
+const { title, date, body } = post.data;
+---
+
+<BaseLayout>
+  <title slot="title">{title}</title>
+
+  <article style="padding: 4rem 1rem; max-width: 700px; margin: auto;">
+    <h1>{title}</h1>
+    <p><small>{date}</small></p>
+    <div innerHTML={body} />
+  </article>
+</BaseLayout>
