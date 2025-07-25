@@ -1,5 +1,5 @@
 ---
-title: hello world
+title: bye world
 date: 2025-07-24
 thumbnail: /images/uploads/1.jpg
 ---
