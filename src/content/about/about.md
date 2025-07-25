@@ -1,5 +1,5 @@
 ---
-headline: Our Story our our
+headline: "Our Story our "
 cta_text: click me
 thank_you: Thanks!
 ---
