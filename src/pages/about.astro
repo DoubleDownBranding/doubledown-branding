@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEntryBySlug } from 'astro:content';
-import Markdown from '@astrojs/markdown-remark/components/Markdown.astro';
+import { Markdown } from 'astro/components';
 
 const content = await getEntryBySlug('about', 'about');
 if (!content) throw new Error('Content not found for about/about.md');
