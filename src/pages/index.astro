@@ -1,9 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEntryBySlug } from 'astro:content';
+
 const content = await getEntryBySlug('homepage', 'homepage');
+
+if (!content) {
+  throw new Error('Homepage content not found.');
+}
+
 const { headline, cta } = content.data;
 ---
+
 
 <html lang="en">
   <head>
