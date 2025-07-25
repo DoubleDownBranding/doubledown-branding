@@ -1,32 +1,48 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEntryBySlug } from 'astro:content';
-const content = await getEntryBySlug('about', 'about');
-const { headline, body, cta_text, thank_you } = content.data;
+
+const about = await getEntryBySlug('about', 'about');
+
+if (!about) {
+  throw new Error('About content not found');
+}
+
+const { headline, body, cta_text, thank_you } = about.data;
 ---
 
 <BaseLayout>
   <title slot="title">About - DoubleDown Branding</title>
 
+  <!-- Hero & Text -->
   <section style="padding: 4rem 1rem;">
     <h1>{headline}</h1>
     <p>{body}</p>
   </section>
 
+  <!-- Form Section -->
   <section style="padding: 2rem;">
     <form method="POST" name="download-form" data-netlify="true">
       <input type="hidden" name="form-name" value="download-form" />
+      
       <label>
-        Name <input type="text" name="name" required />
-      </label>
+        Name
+        <input type="text" name="name" required />
+      </label><br />
+
       <label>
-        Last Name <input type="text" name="lastname" required />
-      </label>
+        Last Name
+        <input type="text" name="lastname" required />
+      </label><br />
+
       <label>
-        Email <input type="email" name="email" required />
-      </label>
+        Email
+        <input type="email" name="email" required />
+      </label><br />
+
       <button type="submit">{cta_text}</button>
     </form>
+
     <p>{thank_you}</p>
   </section>
 </BaseLayout>
