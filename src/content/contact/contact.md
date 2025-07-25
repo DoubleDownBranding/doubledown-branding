@@ -1,7 +1,5 @@
 ---
-title: "Let’s Talk"
-intro: >
-  Reach out to us by filling the form below.  
-  Whether you’re starting up or scaling up, we’ll make your brand unforgettable.
-thank_you: "Thanks for contacting us! We’ll reply shortly."
+title: "Contact Us"
+intro: "Let’s start your branding journey — reach out below."
+thank_you: "Thanks! We'll get back to you soon."
 ---
