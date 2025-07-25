@@ -1,0 +1,34 @@
+:root {
+  --color-dark-blue: #0a1d3f;
+  --color-red: #d72638;
+  --color-light-bg: #fdf6ed;
+  --font-main: 'Arial Black', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main);
+  background: var(--color-light-bg);
+  color: var(--color-dark-blue);
+}
+
+h1, h2, h3 {
+  font-weight: bold;
+}
+
+a {
+  color: var(--color-dark-blue);
+  text-decoration: none;
+}
+
+nav a {
+  margin: 0 1rem;
+}
+
+footer {
+  background: var(--color-dark-blue);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
