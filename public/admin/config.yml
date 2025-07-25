@@ -8,7 +8,7 @@ public_folder: "/images/uploads"
 collections:
   - name: "blog"
     label: "Blog"
-    folder: "content/blog"
+    folder: "src/content/blog"
     create: true
     slug: "{{slug}}"
     fields:
@@ -20,7 +20,7 @@ collections:
   - name: "homepage"
     label: "Homepage"
     files:
-      - file: "src/content/homepage.md"
+      - file: "src/content/homepage/homepage.md"
         label: "Hero Section"
         name: "hero"
         fields:
@@ -30,7 +30,7 @@ collections:
   - name: "about"
     label: "About Page"
     files:
-      - file: "src/content/about.md"
+      - file: "src/content/about/about.md"
         label: "About Text"
         name: "about_content"
         fields:
@@ -42,7 +42,7 @@ collections:
   - name: "contact"
     label: "Contact Page"
     files:
-      - file: "src/content/contact.md"
+      - file: "src/content/contact/contact.md"
         label: "Contact Info"
         name: "contact_content"
         fields:
