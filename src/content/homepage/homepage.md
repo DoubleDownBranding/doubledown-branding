@@ -1,4 +1,4 @@
 ---
-headline: "Creating Brands That Can Go Against Anyone in Their Market"
+headline: "Creating Brands for Startups with Global Ambition"
 cta: "Get Started"
 ---
