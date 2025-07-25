@@ -5,31 +5,45 @@ const content = await getEntryBySlug('homepage', 'homepage');
 const { headline, cta } = content.data;
 ---
 
-<BaseLayout>
-  <title slot="title">Home - DoubleDown Branding</title>
+<html lang="en">
+  <head>
+    <title>Home - DoubleDown Branding</title>
+    <script>
+      // This script redirects invite_token links to the admin panel
+      const url = new URL(window.location.href);
+      const token = url.hash.match(/invite_token=([^&]+)/);
+      if (token) {
+        window.location.href = `/admin/#invite_token=${token[1]}`;
+      }
+    </script>
+  </head>
 
-  <section style="text-align: center; padding: 4rem 1rem; background: var(--color-dark-blue); color: white;">
-    <h1>{headline}</h1>
-    <a href="/contact" style="display: inline-block; margin-top: 1rem; background: var(--color-red); color: white; padding: 0.75rem 1.5rem; border-radius: 4px;">
-      {cta}
-    </a>
-  </section>
+  <body>
+    <BaseLayout>
+      <section style="text-align: center; padding: 4rem 1rem; background: var(--color-dark-blue); color: white;">
+        <h1>{headline}</h1>
+        <a href="/contact" style="display: inline-block; margin-top: 1rem; background: var(--color-red); color: white; padding: 0.75rem 1.5rem; border-radius: 4px;">
+          {cta}
+        </a>
+      </section>
 
-  <section style="padding: 2rem; text-align: center;">
-    <h2>Client Logos</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
-      <img src="/images/uploads/logo1.png" alt="Client 1" />
-      <img src="/images/uploads/logo2.png" alt="Client 2" />
-      <img src="/images/uploads/logo3.png" alt="Client 3" />
-    </div>
-  </section>
+      <section style="padding: 2rem; text-align: center;">
+        <h2>Client Logos</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
+          <img src="/images/uploads/logo1.png" alt="Client 1" />
+          <img src="/images/uploads/logo2.png" alt="Client 2" />
+          <img src="/images/uploads/logo3.png" alt="Client 3" />
+        </div>
+      </section>
 
-  <section style="text-align: center; margin-top: 4rem;">
-    <h2>Stay Connected</h2>
-    <div>
-      <img src="/images/uploads/instagram.svg" width="32" />
-      <img src="/images/uploads/youtube.svg" width="32" />
-      <img src="/images/uploads/linkedin.svg" width="32" />
-    </div>
-  </section>
-</BaseLayout>
+      <section style="text-align: center; margin-top: 4rem;">
+        <h2>Stay Connected</h2>
+        <div>
+          <img src="/images/uploads/instagram.svg" width="32" />
+          <img src="/images/uploads/youtube.svg" width="32" />
+          <img src="/images/uploads/linkedin.svg" width="32" />
+        </div>
+      </section>
+    </BaseLayout>
+  </body>
+</html>
