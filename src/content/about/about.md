@@ -1,8 +1,8 @@
 ---
 headline: Our Story our our
+body: |
+  This is some rich markdown content.
+  It will now show up correctly!
 cta_text: click me
-thank_you: Thanks for your interes!!!!!!!!!!!!!!!!!!
+thank_you: Thanks!
 ---
-This is the changed text.\
-Why is it not here?\
-Here it is now — showing properly as Markdown! cha
