@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const posts = await getCollection('blog');
+---
+
+<BaseLayout>
+  <title slot="title">The Blog</title>
+
+  <section style="background: #111; color: white; padding: 4rem 1rem; text-align: center;">
+    <h1>The Blog</h1>
+  </section>
+
+  <section style="display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding: 2rem;">
+    {posts.map(post => (
+      <a href={`/blog/${post.slug}/`} style="text-decoration: none; color: inherit;">
+        <div>
+          <img src={post.data.thumbnail} alt="" style="width: 100%;" />
+          <h2>{post.data.title}</h2>
+          <p style="font-size: 0.85rem;">{post.data.date}</p>
+        </div>
+      </a>
+    ))}
+  </section>
+</BaseLayout>
