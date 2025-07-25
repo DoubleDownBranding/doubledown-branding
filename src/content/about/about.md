@@ -1,6 +1,6 @@
 ---
-headline: Our Story
-cta_text: Download Our Portfolio
-thank_you: Thanks for your interest!
+headline: Our Story our our
+cta_text: click me
+thank_you: Thanks for your interes!!!!!!!!!!!!!!!!!!
 ---
-this is a changed text
+this is a changed text why is it not here
