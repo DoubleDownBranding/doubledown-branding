@@ -1,6 +1,6 @@
 ---
-headline: "About Us"
-body: "We help startups compete through bold visual branding and packaging. This is our story..."
-cta_text: "Download Portfolio"
-thank_you: "Thanks! Your download will begin shortly."
+headline: "Our Story"
+body: "We are DoubleDown Branding, here to help startups win the city."
+cta_text: "Download Our Portfolio"
+thank_you: "Thanks for your interest!"
 ---
