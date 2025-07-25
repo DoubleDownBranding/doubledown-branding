@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEntryBySlug } from 'astro:content';
-import { Markdown } from 'astro/components';
 
 const content = await getEntryBySlug('about', 'about');
 if (!content) throw new Error('Content not found for about/about.md');
@@ -14,7 +13,7 @@ const { headline, body, cta_text, thank_you } = content.data;
 
   <section style="padding: 4rem 1rem;">
     <h1>{headline}</h1>
-    <Markdown content={body} />
+    <article innerHTML={body} />
   </section>
 
   <section style="padding: 2rem;">
