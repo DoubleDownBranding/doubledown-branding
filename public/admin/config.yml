@@ -1,6 +1,8 @@
 backend:
   name: git-gateway
   branch: main
+  build_hooks:
+    - "https://api.netlify.com/build_hooks/6883ed1c6e01f5f7c39897d9"
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
