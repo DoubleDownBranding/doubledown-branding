@@ -1,0 +1,15 @@
+---
+const socialLinks = [
+  { href: "https://instagram.com", label: "Instagram", icon: "/images/uploads/instagram.svg" },
+  { href: "https://youtube.com", label: "YouTube", icon: "/images/uploads/youtube.svg" },
+  { href: "https://linkedin.com", label: "LinkedIn", icon: "/images/uploads/linkedin.svg" }
+];
+---
+
+<div style="margin-top: 1rem;">
+  {socialLinks.map(link => (
+    <a href={link.href} target="_blank" rel="noopener" style="margin: 0 0.5rem;">
+      <img src={link.icon} alt={link.label} width="24" height="24" />
+    </a>
+  ))}
+</div>
