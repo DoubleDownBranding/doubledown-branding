@@ -41,7 +41,8 @@ const { title, intro, thank_you } = content.data;
       <h1>{title}</h1>
       <p class="intro">{intro}</p>
 
-      <form id="contact-form" name="contact" method="POST" action="/" netlify netlify-honeypot="bot-field">
+      <form id="contact-form" name="contact" method="POST"
+            action="/contact" netlify netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="contact" />
 
         <p class="hidden">
@@ -76,6 +77,7 @@ const { title, intro, thank_you } = content.data;
       <p id="thankyou" class="thankyou" role="status" aria-live="polite">{thank_you}</p>
     </div>
   </section>
+<!--
 
   <script is:inline>
     function encode(d){return Object.keys(d).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(d[k])).join('&');}
@@ -92,4 +94,6 @@ const { title, intro, thank_you } = content.data;
       }catch(err){alert('Something went wrong, please try again.');}
     });
   </script>
+  -->
+
 </BaseLayout>
