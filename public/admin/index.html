@@ -8,14 +8,10 @@
   </head>
   <body>
     <script>
+      // Open the login modal if not logged in. No redirects needed.
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", (user) => {
-          // If not logged in, open the login modal automatically
           if (!user) window.netlifyIdentity.open("login");
-        });
-        // After login, go to /admin/
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
         });
       }
     </script>
