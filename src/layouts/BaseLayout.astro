@@ -5,23 +5,25 @@ import Footer from '../components/Footer.astro';
 <!doctype html>
 <html lang="en">
   <head>
-
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <meta name="theme-color" content="#0D1A5A">
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><slot name="title" /></title>
+
+    <!-- Page title (uses named slot if provided, otherwise brand fallback) -->
+    {Astro.slots.has('title')
+      ? <title><slot name="title" /> | DoubleDown Branding</title>
+      : <title>DoubleDown Branding</title>
+    }
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="theme-color" content="#0D1A5A" />
 
     <!-- Global styles -->
     <link rel="stylesheet" href="/styles/global.css" />
-
-    <!-- Optional quality-of-life -->
-    <meta name="theme-color" content="#0D1A5A" />
   </head>
 
-  <body style="font-family: 'Gotham', sans-serif; background-color: #f6e4cc; margin: 0; padding: 0;">
+  <body style="font-family: 'Gotham', sans-serif; background-color: #64615eff; margin: 0; padding: 0;">
     <style>
       :root {
         --ink: #0D1A5A;
@@ -34,21 +36,19 @@ import Footer from '../components/Footer.astro';
         display: grid;
         grid-template-rows: auto 1fr auto;
       }
-      /* Make sure images do not create layout gaps */
+      /* Avoid image layout shifts */
       img { display: block; max-width: 100%; height: auto; }
+
+      /* Keep content clear of fixed header */
+      main { padding-top: var(--header-h-desktop); }
+      @media (max-width: 768px) {
+        main { padding-top: 120px; }
+      }
     </style>
 
     <Header />
 
-    <style>
-  main { padding-top: var(--header-h-desktop); }
-  @media (max-width: 768px) {
-    main { padding-top: 120px; } /* enough for 2 lines; tweak to taste */
-  }
-</style>
-
-
-    <!-- Skip link target -->
+    <!-- Main content -->
     <main id="main" role="main" tabindex="-1">
       <slot />
     </main>
