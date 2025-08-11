@@ -3,12 +3,24 @@
   <head>
     <meta charset="utf-8" />
     <title>DoubleDown CMS</title>
+    <!-- Netlify Identity widget for login/invite handling -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <!-- Decap (Netlify) CMS -->
+    <script src="https://unpkg.com/decap-cms@3.1.9/dist/decap-cms.js"></script>
   </head>
   <body>
     <script>
-      // Open the login modal if not logged in. No redirects needed.
+      // Redirect invite_token from homepage or admin to correct location
+      (function () {
+        if (location.hash && location.hash.indexOf('invite_token=') !== -1) {
+          var target = '/admin/' + location.hash;
+          if (window.location.pathname !== '/admin/') {
+            window.location.replace(target);
+          }
+        }
+      })();
+
+      // Auto-open login modal if not logged in
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", (user) => {
           if (!user) window.netlifyIdentity.open("login");
