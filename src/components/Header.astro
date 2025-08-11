@@ -1,5 +1,4 @@
 ---
-/* no script needed */
 ---
 <style>
   :root {
@@ -91,7 +90,8 @@
 
 <nav>
   <a href="/">
-    <img src="/images/uploads/logo.png" alt="Double Down Logo" class="logo" />
+    <!-- Fix case to match file on Netlify -->
+    <img src="/images/uploads/Logo.png" alt="Double Down Logo" class="logo" />
   </a>
   <ul>
     <li><a href="/about">ABOUT</a></li>
@@ -100,3 +100,22 @@
     <li><a href="/contact">CONTACT</a></li>
   </ul>
 </nav>
+
+<!-- Netlify Identity on every page to handle invites/login -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  (function () {
+    try {
+      // If an invite link lands anywhere with #invite_token, send it to /admin with the token intact
+      if (location.hash && location.hash.indexOf('invite_token=') !== -1) {
+        var target = '/admin/' + location.hash;
+        if (window.location.pathname !== '/admin/') {
+          window.location.replace(target);
+          return;
+        }
+      }
+    } catch (e) {
+      /* no-op */
+    }
+  })();
+</script>
