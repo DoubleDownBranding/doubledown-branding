@@ -2,14 +2,17 @@
 import { getCollection, getEntryBySlug } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Pre-render this route and enumerate all blog slugs at build time
+// prerender & enumerate slugs so we avoid any 500s
 export const prerender = true;
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map(({ slug }) => ({ params: { slug } }));
 }
 
-// Use params (not props) when resolving the current post
+// utils
+const wordsPerMinute = 200;
+const readingTime = (text = '') => `${Math.max(1, Math.round(text.trim().split(/\s+/).filter(Boolean).length / wordsPerMinute))} min read`;
+
 const { slug } = Astro.params;
 const entry = await getEntryBySlug('blog', slug);
 
@@ -21,43 +24,110 @@ if (!entry) {
 const { Content } = await entry.render();
 const data = entry.data;
 
+// data from frontmatter (all optional-safe)
+const author = data?.author || 'DoubleDown';
+const tags = Array.isArray(data?.tags) ? data.tags : [];
+
 const dateObj = data?.date ? new Date(data.date) : null;
 const formattedDate = dateObj
   ? dateObj.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' })
   : '';
 const dateISO = dateObj ? dateObj.toISOString() : '';
+
+// reading time from raw markdown
+const minutes = readingTime(entry.body || '');
+
+// canonical for sharing
+const canonical = Astro.url?.href ?? `/blog/${slug}/`;
+
+// prev/next (newer/older) by date
+const all = await getCollection('blog');
+const sorted = all
+  .map(p => ({
+    slug: p.slug,
+    title: p.data.title,
+    date: p.data.date ? new Date(p.data.date).getTime() : 0
+  }))
+  .sort((a, b) => b.date - a.date);
+
+const i = sorted.findIndex(p => p.slug === slug);
+const newer = i > 0 ? sorted[i - 1] : null;     // previous article (newer)
+const older = i >= 0 && i < sorted.length - 1 ? sorted[i + 1] : null; // next article (older)
 ---
 
 <BaseLayout>
   <title slot="title">{data.title || 'Blog post'}</title>
 
   <style>
-    :root { --ink:#0D1A5A; --paper:#f6e4cc; --accent:#ef3741; }
+    :root { --ink:#0D1A5A; --paper:#f6e4cc; --accent:#ef3741; --muted:rgba(13,26,90,.75); --border:rgba(13,26,90,.15); }
     .wrap { padding: 3rem 1rem 5rem; background: var(--paper); }
     .container { max-width: 860px; margin: 0 auto; }
+
     .post-title { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 .5rem; color: var(--ink); font-weight: 800; }
-    .meta { color: rgba(13,26,90,.8); margin: 0 0 1.5rem; font-size: .95rem; }
-    .hero { margin: 0 0 1.5rem; border-radius: 4px; overflow: hidden; background: #fff; border: 1px solid rgba(13,26,90,.12); }
+
+    .meta-bar {
+      display:flex; flex-wrap:wrap; gap:.75rem 1rem; align-items:center;
+      color: var(--muted); font-size:.95rem; margin: 0 0 1.25rem;
+    }
+    .dot::before { content:"•"; margin: 0 .5rem; opacity:.6; }
+    .chip {
+      display:inline-flex; align-items:center; gap:.35rem;
+      font-size:.8rem; color:var(--ink); background:#fff5e8;
+      border:1px solid var(--border); border-radius:999px; padding:.25rem .6rem;
+    }
+    .tag-row { display:flex; flex-wrap:wrap; gap:.5rem; margin:.25rem 0 1.5rem; }
+
+    .hero { margin: 0 0 1.5rem; border-radius: 6px; overflow: hidden; background: #fff; border: 1px solid var(--border); }
     .hero img { display:block; width:100%; height:auto; }
+
     .content :where(p, ul, ol, blockquote, pre, table, h2, h3, h4, img){ margin: 0 0 1.15rem; }
     .content p { line-height: 1.85; font-size: 1.1rem; color: var(--ink); }
     .content h2 { font-size: clamp(1.4rem, 3.5vw, 2rem); margin-top: 2rem; color: var(--ink); }
     .content h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); margin-top: 1.25rem; color: var(--ink); }
     .content ul, .content ol { padding-left: 1.25rem; line-height: 1.75; }
     .content a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
-    .content pre { padding: 1rem; background: #fff; border: 1px solid rgba(13,26,90,.15); border-radius: 4px; overflow: auto; }
-    .back { display:inline-block; margin-top:1.5rem; color:var(--accent); text-decoration:none; font-weight:700; border-bottom:2px solid transparent; }
-    .back:hover, .back:focus-visible { border-bottom-color: var(--accent); outline: none; }
+    .content pre { padding: 1rem; background: #fff; border: 1px solid var(--border); border-radius: 4px; overflow: auto; }
+
+    .share {
+      display:flex; flex-wrap:wrap; gap:.75rem; margin: 2rem 0 0;
+    }
+    .btn {
+      display:inline-flex; align-items:center; gap:.4rem;
+      color: var(--accent); text-decoration:none; font-weight:700;
+      border:1px solid var(--border); background:#fff; padding:.5rem .75rem; border-radius:8px;
+      transition: transform .08s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: rgba(13,26,90,0.3); box-shadow: 0 6px 18px rgba(13,26,90,.12); }
+
+    .pager {
+      display:flex; justify-content:space-between; gap:1rem; margin: 2.5rem 0 0;
+      border-top:1px solid var(--border); padding-top:1.25rem;
+    }
+    .pager a {
+      color: var(--accent); text-decoration:none; font-weight:700;
+      border-bottom: 2px solid transparent;
+    }
+    .pager a:hover, .pager a:focus-visible { border-bottom-color: var(--accent); outline:none; }
+    .back { display:inline-block; margin-top:1.75rem; color:var(--accent); text-decoration:none; font-weight:700; border-bottom:2px solid transparent; }
+    .back:hover, .back:focus-visible { border-bottom-color: var(--accent); outline:none; }
   </style>
 
   <main id="main" class="wrap">
     <article class="container" itemscope itemtype="https://schema.org/Article">
       <h1 class="post-title" itemprop="headline">{data.title}</h1>
 
-      {formattedDate && (
-        <p class="meta">
-          <time datetime={dateISO} itemprop="datePublished">{formattedDate}</time>
-        </p>
+      <div class="meta-bar">
+        {formattedDate && <time datetime={dateISO} itemprop="datePublished">{formattedDate}</time>}
+        <span class="dot"></span>
+        <span>{minutes}</span>
+        <span class="dot"></span>
+        <span>by {author}</span>
+      </div>
+
+      {tags.length > 0 && (
+        <div class="tag-row" aria-label="Tags">
+          {tags.slice(0, 6).map((t) => <span class="chip">{t}</span>)}
+        </div>
       )}
 
       {data.thumbnail && (
@@ -69,6 +139,21 @@ const dateISO = dateObj ? dateObj.toISOString() : '';
       <div class="content" itemprop="articleBody">
         <Content />
       </div>
+
+      <div class="share" aria-label="Share">
+        <a class="btn" href={`https://x.com/intent/tweet?url=${encodeURIComponent(canonical)}&text=${encodeURIComponent(data.title || '')}`} target="_blank" rel="noopener">Share on X</a>
+        <a class="btn" href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`} target="_blank" rel="noopener">Share on LinkedIn</a>
+        <button class="btn" onclick={`navigator.clipboard.writeText('${canonical}')`}>Copy link</button>
+      </div>
+
+      <nav class="pager" aria-label="Article navigation">
+        <div>
+          {newer && <a href={`/blog/${newer.slug}/`}>← Newer: {newer.title}</a>}
+        </div>
+        <div>
+          {older && <a href={`/blog/${older.slug}/`}>Older: {older.title} →</a>}
+        </div>
+      </nav>
 
       <a href="/blog" class="back" aria-label="Back to blog">Back to Blog</a>
     </article>
