@@ -8,9 +8,9 @@ import Footer from '../components/Footer.astro';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Page title (uses named slot if provided, otherwise brand fallback) -->
+    <!-- Page title: if the page provides <title slot="title">, render it directly; otherwise fallback -->
     {Astro.slots.has('title')
-      ? <title><slot name="title" /> | DoubleDown Branding</title>
+      ? <slot name="title" />
       : <title>DoubleDown Branding</title>
     }
 
@@ -23,11 +23,11 @@ import Footer from '../components/Footer.astro';
     <link rel="stylesheet" href="/styles/global.css" />
   </head>
 
-  <body style="font-family: 'Gotham', sans-serif; background-color: #64615eff; margin: 0; padding: 0;">
+  <body style="font-family: 'Gotham', sans-serif; margin: 0; padding: 0; background: var(--paper);">
     <style>
       :root {
         --ink: #0D1A5A;
-        --paper: #f6e4cc;
+        --paper: #f6e4cc;   /* site background */
         --accent: #ef3741;
       }
       /* Page shell so footer stays at the bottom on short pages */
@@ -48,7 +48,6 @@ import Footer from '../components/Footer.astro';
 
     <Header />
 
-    <!-- Main content -->
     <main id="main" role="main" tabindex="-1">
       <slot />
     </main>
