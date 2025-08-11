@@ -3,27 +3,34 @@
   <head>
     <meta charset="utf-8" />
     <title>DoubleDown CMS</title>
-    <!-- Netlify Identity for login/invites -->
+    <link rel="icon" href="/favicon.ico" />
+    <!-- Must be set before loading Decap -->
+    <script>window.CMS_MANUAL_INIT = true;</script>
+    <!-- Identity for login/invites -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <!-- Decap CMS (pinned stable) -->
     <script src="https://unpkg.com/decap-cms@3.1.9/dist/decap-cms.js"></script>
   </head>
   <body>
     <script>
-      // If an invite link lands anywhere with #invite_token, route it to /admin with the token intact
+      // If an invite lands anywhere with #invite_token, route it to /admin with token intact
       (function () {
         if (location.hash && location.hash.indexOf('invite_token=') !== -1 && location.pathname !== '/admin/') {
           window.location.replace('/admin/' + location.hash);
         }
       })();
 
-      // Optional: open login if not logged in
+      // Init CMS after the DOM is ready; will auto-load /admin/config.yml
+      document.addEventListener('DOMContentLoaded', function () {
+        CMS.init();
+      });
+
+      // Optional: auto-open login if not logged in
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on('init', function (user) {
           if (!user) window.netlifyIdentity.open('login');
         });
       }
-      // No manual init here — Decap auto-loads /admin/config.yml
     </script>
   </body>
 </html>
