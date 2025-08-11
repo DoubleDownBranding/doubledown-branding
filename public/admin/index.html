@@ -3,20 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <title>DoubleDown CMS</title>
-    <!-- Netlify Identity widget for login -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <!-- Decap (Netlify) CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   </head>
   <body>
     <script>
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", (user) => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
-            });
-          }
+          // If not logged in, open the login modal automatically
+          if (!user) window.netlifyIdentity.open("login");
+        });
+        // After login, go to /admin/
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
         });
       }
     </script>
