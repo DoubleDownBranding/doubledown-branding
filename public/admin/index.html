@@ -3,90 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <title>DoubleDown CMS</title>
-
-    <!-- IMPORTANT: manual init flag must be set BEFORE loading decap-cms -->
-    <script>
-      window.CMS_MANUAL_INIT = true;
-    </script>
-
-    <!-- Netlify Identity (login/invite handling) -->
+    <!-- Netlify Identity for login/invites -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-
-    <!-- Pin to a stable Decap CMS build -->
+    <!-- Decap CMS (pinned stable) -->
     <script src="https://unpkg.com/decap-cms@3.1.9/dist/decap-cms.js"></script>
   </head>
   <body>
     <script>
-      // If an invite link lands anywhere with #invite_token, route it to /admin with token intact
+      // If an invite link lands anywhere with #invite_token, route it to /admin with the token intact
       (function () {
         if (location.hash && location.hash.indexOf('invite_token=') !== -1 && location.pathname !== '/admin/') {
           window.location.replace('/admin/' + location.hash);
         }
       })();
 
-      // Initialize CMS AFTER the script is loaded
-      document.addEventListener("DOMContentLoaded", function () {
-        CMS.init({
-          config: {
-            backend: { name: "git-gateway", branch: "main" },
-            media_folder: "public/images/uploads",
-            public_folder: "/images/uploads",
-            collections: [
-              {
-                name: "blog",
-                label: "Blog",
-                folder: "src/content/blog",
-                create: true,
-                slug: "{{slug}}",
-                fields: [
-                  { label: "Title", name: "title", widget: "string" },
-                  { label: "Publish Date", name: "date", widget: "datetime" },
-                  { label: "Featured Image", name: "thumbnail", widget: "image", required: false },
-                  { label: "Body", name: "body", widget: "markdown" }
-                ]
-              },
-              {
-                name: "homepage",
-                label: "Homepage",
-                files: [
-                  {
-                    file: "src/content/homepage/homepage.md",
-                    label: "Hero Section",
-                    name: "hero",
-                    fields: [
-                      { label: "Headline", name: "headline", widget: "string", required: false },
-                      { label: "CTA Text", name: "cta", widget: "string", required: false }
-                    ]
-                  }
-                ]
-              },
-              {
-                name: "contact",
-                label: "Contact Page",
-                files: [
-                  {
-                    file: "src/content/contact/contact.md",
-                    label: "Contact Info",
-                    name: "contact_content",
-                    fields: [
-                      { label: "Page Title", name: "title", widget: "string", required: false },
-                      { label: "Intro Text", name: "intro", widget: "markdown", required: false },
-                      { label: "Thank You Message", name: "thank_you", widget: "string", required: false }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        });
-      });
-
       // Optional: open login if not logged in
       if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", (user) => {
-          if (!user) window.netlifyIdentity.open("login");
+        window.netlifyIdentity.on('init', function (user) {
+          if (!user) window.netlifyIdentity.open('login');
         });
       }
+      // No manual init here — Decap auto-loads /admin/config.yml
     </script>
   </body>
 </html>
