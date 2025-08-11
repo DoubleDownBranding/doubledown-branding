@@ -3,28 +3,28 @@
   <head>
     <meta charset="utf-8" />
     <title>DoubleDown CMS</title>
+
+    <!-- IMPORTANT: manual init flag must be set BEFORE loading decap-cms -->
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
+
+    <!-- Netlify Identity (login/invite handling) -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
     <!-- Pin to a stable Decap CMS build -->
     <script src="https://unpkg.com/decap-cms@3.1.9/dist/decap-cms.js"></script>
   </head>
   <body>
     <script>
-      // If an invite lands anywhere with #invite_token, redirect to /admin with token intact
+      // If an invite link lands anywhere with #invite_token, route it to /admin with token intact
       (function () {
         if (location.hash && location.hash.indexOf('invite_token=') !== -1 && location.pathname !== '/admin/') {
           window.location.replace('/admin/' + location.hash);
         }
       })();
 
-      // Auto-open login if not logged in
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", (user) => {
-          if (!user) window.netlifyIdentity.open("login");
-        });
-      }
-
-      // Initialize CMS with inline config (bypasses config.yml issues)
-      window.CMS_MANUAL_INIT = true;
+      // Initialize CMS AFTER the script is loaded
       document.addEventListener("DOMContentLoaded", function () {
         CMS.init({
           config: {
@@ -80,6 +80,13 @@
           }
         });
       });
+
+      // Optional: open login if not logged in
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) window.netlifyIdentity.open("login");
+        });
+      }
     </script>
   </body>
 </html>
