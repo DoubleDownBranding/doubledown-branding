@@ -13,24 +13,23 @@ const { title, intro, thank_you } = content.data;
   <style>
     :root { --ink:#0D1A5A; --paper:#f6e4cc; --accent:#ef3741; --radius:4px; --gap-lg:7rem; --gap-md:2rem; --gap-sm:1rem; }
     body { font-family:'Gotham',sans-serif; margin:0; padding:0; overflow-x:hidden; background-color:var(--paper); color:var(--ink); }
-    .hero { width:100%; overflow:hidden; background-color:var(--paper); }
-    .hero img { display:block; width:100%; height:auto; object-fit:cover; }
-    .contact-wrap { background:var(--paper); color:var(--ink); padding:var(--gap-lg) 1rem; }
-    .container { max-width:800px; margin:0 auto; text-align:center; }
-    h1 { margin:0 0 var(--gap-md); font-size:clamp(2rem,5vw,3rem); font-weight:700; color:var(--ink); }
-    .intro { margin:0 auto var(--gap-lg); line-height:1.8; font-size:1.125rem; max-width:720px; }
-    form { display:flex; flex-direction:column; gap:1.2rem; align-items:center; text-align:left; }
-    .field { width:100%; }
-    label { display:block; font-weight:600; margin-bottom:.4rem; }
-    input, textarea { width:100%; padding:.85rem .9rem; border:1px solid rgba(13,26,90,.25); border-radius:var(--radius); font-size:1rem; background:#fff; color:var(--ink); outline:none; }
-    textarea { min-height:140px; resize:vertical; }
-    input:focus, textarea:focus { border-color:var(--ink); box-shadow:0 0 0 3px rgba(13,26,90,.12); }
-    .btn { padding:.9rem 3rem; margin-top:.5rem; font-size:1.25rem; background-color:var(--accent); color:var(--paper); font-weight:700; border:2px solid transparent; border-radius:var(--radius); cursor:pointer; transition:all .2s ease; }
-    .btn:hover { background:var(--paper); color:var(--ink); border-color:var(--ink); }
-    .hidden { position:absolute!important; left:-10000px!important; top:auto!important; width:1px!important; height:1px!important; overflow:hidden!important; }
-    .thankyou { display:none; margin-top:var(--gap-md); line-height:1.8; font-size:1.1rem; }
-    .thankyou.show { display:block; }
-    @media (max-width:768px){ .contact-wrap{padding:3.5rem 1rem;} .intro{margin-bottom:3rem;} .btn{width:100%;} }
+    .hero{width:100%;overflow:hidden;background-color:var(--paper)} .hero img{display:block;width:100%;height:auto;object-fit:cover}
+    .contact-wrap{background:var(--paper);color:var(--ink);padding:var(--gap-lg) 1rem}
+    .container{max-width:800px;margin:0 auto;text-align:center}
+    h1{margin:0 0 var(--gap-md);font-size:clamp(2rem,5vw,3rem);font-weight:700;color:var(--ink)}
+    .intro{margin:0 auto var(--gap-lg);line-height:1.8;font-size:1.125rem;max-width:720px}
+    form{display:flex;flex-direction:column;gap:1.2rem;align-items:center;text-align:left}
+    .field{width:100%}
+    label{display:block;font-weight:600;margin-bottom:.4rem}
+    input,textarea{width:100%;padding:.85rem .9rem;border:1px solid rgba(13,26,90,.25);border-radius:var(--radius);font-size:1rem;background:#fff;color:var(--ink);outline:none}
+    textarea{min-height:140px;resize:vertical}
+    input:focus,textarea:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(13,26,90,.12)}
+    .btn{padding:.9rem 3rem;margin-top:.5rem;font-size:1.25rem;background-color:var(--accent);color:var(--paper);font-weight:700;border:2px solid transparent;border-radius:var(--radius);cursor:pointer;transition:all .2s ease}
+    .btn:hover{background:var(--paper);color:var(--ink);border-color:var(--ink)}
+    .hidden{position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important}
+    .thankyou{display:none;margin-top:var(--gap-md);line-height:1.8;font-size:1.1rem}
+    .thankyou.show{display:block}
+    @media (max-width:768px){.contact-wrap{padding:3.5rem 1rem}.intro{margin-bottom:3rem}.btn{width:100%}}
   </style>
 
   <section class="hero" aria-label="Get in touch">
@@ -42,8 +41,7 @@ const { title, intro, thank_you } = content.data;
       <h1>{title}</h1>
       <p class="intro">{intro}</p>
 
-      <form id="contact-form" name="contact" method="POST"
-            action="/" data-netlify="true" netlify-honeypot="bot-field">
+      <form id="contact-form" name="contact" method="POST" action="/" netlify netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="contact" />
 
         <p class="hidden">
@@ -80,28 +78,18 @@ const { title, intro, thank_you } = content.data;
   </section>
 
   <script is:inline>
-    function encode(data){return Object.keys(data).map((k)=>encodeURIComponent(k)+'='+encodeURIComponent(data[k])).join('&');}
-    const form = document.getElementById('contact-form');
-    const thanks = document.getElementById('thankyou');
+    function encode(d){return Object.keys(d).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(d[k])).join('&');}
+    const form=document.getElementById('contact-form');
+    const thanks=document.getElementById('thankyou');
 
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async (e)=>{
       e.preventDefault();
-      const formData = new FormData(form);
-      const payload = { 'form-name': form.getAttribute('name') };
-      formData.forEach((v,k)=>payload[k]=v);
-      try {
-        const res = await fetch(form.action, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: encode(payload),
-        });
-        form.reset();
-        form.style.display = 'none';
-        thanks.classList.add('show');
-        thanks.focus?.();
-      } catch (err) {
-        alert('Something went wrong, please try again.');
-      }
+      const payload={'form-name':form.getAttribute('name')};
+      new FormData(form).forEach((v,k)=>payload[k]=v);
+      try{
+        const res=await fetch(form.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:encode(payload)});
+        form.reset(); form.style.display='none'; thanks.classList.add('show'); thanks.focus?.();
+      }catch(err){alert('Something went wrong, please try again.');}
     });
   </script>
 </BaseLayout>

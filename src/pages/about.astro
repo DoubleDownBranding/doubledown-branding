@@ -8,19 +8,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <style>
     :root { --ink:#0D1A5A; --paper:#f6e4cc; --accent:#ef3741; }
     body { font-family:'Gotham',sans-serif; margin:0; padding:0; overflow-x:hidden; background-color:var(--paper); color:var(--ink); }
-    * { box-sizing:border-box; } img { max-width:100%; height:auto; display:block; }
-    section { padding:3rem 2rem; text-align:center; }
-    h1 { font-size:clamp(2.5rem,8vw,6rem); font-weight:700; color:var(--accent); margin:0 0 5rem; line-height:1.05; letter-spacing:-0.02em; }
-    h2 { font-size:clamp(1.5rem,3.5vw,2.25rem); font-weight:700; color:var(--ink); margin:0 0 5rem; line-height:1.2; }
-    p { font-weight:400; font-size:1.125rem; margin:0 auto 1.25rem; line-height:1.85; max-width:1000px; text-align:left; }
-    .centered p { text-align:center; }
-    .image-section { width:100%; margin:2rem 0 0; padding:0; }
-    .block { max-width:1200px; margin:0 auto; padding:0 1rem; }
-    @media (max-width:768px){ section{padding:2rem 1rem;} p{max-width:700px;} }
-    .download-cta h1 { margin-bottom: .5rem; }
-    .download-cta p.top { margin-bottom: 1rem; }
-    .download-btn { display:inline-block; margin-top:1.25rem; padding:.9rem 2rem; background:var(--accent); color:var(--paper); text-decoration:none; font-weight:700; font-size:clamp(1.1rem,3vw,1.6rem); border:2px solid transparent; border-radius:1px; transition:all .2s ease; }
-    .download-btn:hover { background:var(--paper); color:var(--ink); border-color:var(--ink); }
+    *{box-sizing:border-box} img{max-width:100%;height:auto;display:block}
+    section{padding:3rem 2rem;text-align:center}
+    h1{font-size:clamp(2.5rem,8vw,6rem);font-weight:700;color:var(--accent);margin:0 0 5rem;line-height:1.05;letter-spacing:-0.02em}
+    h2{font-size:clamp(1.5rem,3.5vw,2.25rem);font-weight:700;color:var(--ink);margin:0 0 5rem;line-height:1.2}
+    p{font-weight:400;font-size:1.125rem;margin:0 auto 1.25rem;line-height:1.85;max-width:1000px;text-align:left}
+    .centered p{text-align:center}
+    .image-section{width:100%;margin:2rem 0 0;padding:0}
+    .block{max-width:1200px;margin:0 auto;padding:0 1rem}
+    @media (max-width:768px){section{padding:2rem 1rem} p{max-width:700px}}
+    .download-cta h1{margin-bottom:.5rem}
+    .download-cta p.top{margin-bottom:1rem}
+    .download-btn{display:inline-block;margin-top:1.25rem;padding:.9rem 2rem;background:var(--accent);color:var(--paper);text-decoration:none;font-weight:700;font-size:clamp(1.1rem,3vw,1.6rem);border:2px solid transparent;border-radius:1px;transition:all .2s ease}
+    .download-btn:hover{background:var(--paper);color:var(--ink);border-color:var(--ink)}
   </style>
 
   <!-- Hero -->
@@ -93,10 +93,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section>
     <div class="block">
       <h2>Industries We Work With</h2>
-      <p>We partner with startups and emerging companies …</p>
-      <p>In ecommerce, we design systems …</p>
-      <p>In food and health …</p>
-      <p>These sectors might seem different …</p>
+      <p>
+        We partner with startups and emerging companies that are building fast, thinking big, and refusing to blend in. From ecommerce to edtech, our clients are
+        disruptors with big ambitions and the grit to match.
+      </p>
+      <p>
+        In ecommerce, we design systems that turn first-time visitors into loyal customers by positioning products to lead, not just sell. In real estate,
+        we help developers and property ventures stand out in crowded markets with identities that build trust and cut through sameness. In marine logistics,
+        we craft narratives that communicate scale, precision, and dependability across borders.
+      </p>
+      <p>
+        In food and health, we balance emotion with credibility, helping brands earn attention while staying grounded in trust and clarity. With toys and education,
+        we strike the right tone between play and purpose, designing identities that resonate with kids, parents, and institutions.
+      </p>
+      <p>
+        These sectors might seem different, but they share a need for strategic clarity and brand systems built to scale. If you are building in a space that moves fast
+        and demands more than generic design, we are built to help.
+      </p>
     </div>
   </section>
 
@@ -105,10 +118,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="block">
       <h1 style="font-size:clamp(2.5rem,8vw,6rem); color:#ef3741; margin:0 0 5rem;">Download Our Portfolio</h1>
       <p class="top centered" style="font-size:1.125rem; line-height:1.85; max-width:1000px; margin:0 auto 4rem;">
-        See how we turn strategy into brand power…
+        See how we turn strategy into brand power. Inside, you will find how we work, what we build, and how we help ambitious businesses scale with clarity and confidence.
+        The PDF includes tailored case studies that show the kind of brand systems we create for companies ready to level up.
       </p>
 
-      <form id="download-form" name="download-form" method="POST" data-netlify="true" action="/"
+      <form id="download-form" name="download-form" method="POST" action="/" netlify
             style="display:flex; flex-direction:column; align-items:center; gap:1rem; max-width:400px; margin:1rem auto 0;">
         <input type="hidden" name="form-name" value="download-form" />
         <input type="text" name="name" placeholder="Your Name" required
@@ -123,24 +137,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <script is:inline>
-      function encode(data){return Object.keys(data).map((k)=>encodeURIComponent(k)+'='+encodeURIComponent(data[k])).join('&');}
-      const form = document.getElementById('download-form');
-      form.addEventListener('submit', async (e) => {
+      function encode(d){return Object.keys(d).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(d[k])).join('&');}
+      const form=document.getElementById('download-form');
+      form.addEventListener('submit', async (e)=>{
         e.preventDefault();
-        const formData = new FormData(form);
-        const payload = { 'form-name': form.getAttribute('name') };
-        formData.forEach((v,k)=>payload[k]=v);
-        try {
-          await fetch(form.action, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: encode(payload),
-          });
-          // Trigger the download after successful submission
-          window.location.href = '/portfolio.pdf';
-        } catch (err) {
-          alert('Something went wrong. Please try again.');
-        }
+        const payload={'form-name':form.getAttribute('name')};
+        new FormData(form).forEach((v,k)=>payload[k]=v);
+        try{
+          await fetch(form.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:encode(payload)});
+          window.location.href='/portfolio.pdf';
+        }catch(err){alert('Something went wrong. Please try again.');}
       });
     </script>
   </section>
