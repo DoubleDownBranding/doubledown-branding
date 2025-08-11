@@ -1,288 +1,243 @@
 ---
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-<Header />
 
-<style>
-  /* 0) Base */
-  :root {
-    --ink: #0D1A5A;
-    --paper: #f6e4cc;
-    --brand: #ef3741;
-  }
-  body {
-    margin: 0; padding: 0; overflow-x: hidden;
-    font-family: 'Gotham', sans-serif;
-    color: var(--ink);
-    background: var(--paper);
-  }
-  .services-wrapper * { box-sizing: border-box; font-family: 'Gotham', sans-serif; }
+<BaseLayout>
+  <title slot="title">Services</title>
 
-  /* 1) Page shell */
-  .services-section { width: 100vw; background: var(--paper); }
+  <style>
+    /* 0) Base */
+    :root {
+      --ink: #0D1A5A;
+      --paper: #f6e4cc;
+      --brand: #ef3741;
+    }
+    /* (Removed body{...} to not override BaseLayout’s body) */
+    .services-wrapper * { box-sizing: border-box; font-family: 'Gotham', sans-serif; }
 
-  /* 2) Top title + intro (improved readability) */
-  .services-section h1 {
-    text-align: center;
-    font-size: clamp(3rem, 8vw, 8rem);
-    color: var(--brand);
-    margin: 5rem;
-    padding: 4rem 1rem 1rem;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-  }
-  .intro-text {
-    text-align: center;
-    font-size: 1.125rem;
-    margin: 0 auto 3rem;
-    color: var(--ink);
-    line-height: 1.9;              /* ↑ readability */
-    max-width: 1000px;             /* ↓ line length */
-    padding: 0 2rem 4rem;
-  }
+    /* 1) Page shell */
+    .services-section { width: 100vw; background: var(--paper); }
 
-  /* 3) Rows (balanced heights + readable text) */
-  .row {
-    display: flex; width: 100%; margin: 0; padding: 0;
-    align-items: stretch;          /* keep columns equal vertically */
-  }
-  .left, .right { width: 50%; min-height: 380px; }
+    /* 2) Top title + intro (improved readability) */
+    .services-section h1 {
+      text-align: center;
+      font-size: clamp(3rem, 8vw, 8rem);
+      color: var(--brand);
+      margin: 5rem;
+      padding: 4rem 1rem 1rem;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .intro-text {
+      text-align: center;
+      font-size: 1.125rem;
+      margin: 0 auto 3rem;
+      color: var(--ink);
+      line-height: 1.9;
+      max-width: 1000px;
+      padding: 0 2rem 4rem;
+    }
 
-  .image {
-    background: var(--ink);
-    display: flex; align-items: stretch; justify-content: center;
-  }
-  .image picture, .image img {
-    width: 100%; height: 100%;
-  }
-  .image img {
-    object-fit: cover;             /* fills column */
-    object-position: center;       /* adjust focal point if needed */
-    display: block;
-  }
+    /* 3) Rows */
+    .row { display: flex; width: 100%; margin: 0; padding: 0; align-items: stretch; }
+    .left, .right { width: 50%; min-height: 380px; }
 
-  .text {
-    background: var(--paper);
-    color: var(--ink);
-    font-size: 1.125rem;
-    line-height: 1.9;              /* ↑ */
-    padding: 3rem 2rem;
-    text-align: left;              /* easier to read than centered */
-    display: flex; align-items: center; justify-content: center;
-  }
-  .text .inner {
-    width: 100%;
-    max-width: 720px;              /* control line length */
-  }
-  .bold-intro {
-    display: block;
-    font-weight: 700;
-    color: var(--brand);
-    font-size: clamp(1.6rem, 3.2vw, 3rem);   /* ↑ hierarchy */
-    line-height: 1.25;
-    margin: 0 0 1rem;
-    letter-spacing: -0.01em;
-  }
-  .spacer {
-    height: 0.5rem; width: 80px; background: var(--brand);
-    margin: 0.75rem 0 1.25rem; border-radius: 2px; /* subtle separator */
-  }
-  .text p { margin: 0 0 1rem; }
-  .text ul { margin: 0.25rem 0 1.25rem 1.25rem; padding: 0; }
-  .text li { margin: 0.35rem 0; }
+    .image { background: var(--ink); display: flex; align-items: stretch; justify-content: center; }
+    .image picture, .image img { width: 100%; height: 100%; }
+    .image img { object-fit: cover; object-position: center; display: block; }
 
-  /* 4) CTA section (refined sizing; same background) */
-  .cta-section {
-    background: var(--paper);
-    color: var(--ink);
-    text-align: center;
-    padding: 4rem 2rem 6rem;
-  }
-  .cta-section h2 {
-    font-size: clamp(2.2rem, 6vw, 4rem);    /* reduced from 8rem */
-    color: var(--brand);
-    margin: 0 0 2rem;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-  }
-  .cta-section p {
-    font-size: 1.125rem;
-    margin: 0 auto 2.5rem;
-    color: var(--ink);
-    line-height: 1.85;
-    max-width: 840px;
-    padding: 0 1.25rem;
-  }
-  .cta-button {
-    background: var(--brand);
-    color: var(--paper);
-    font-weight: 700;
-    font-size: clamp(1.25rem, 3.5vw, 2rem);
-    text-decoration: none;
-    padding: 0.85rem 2rem;
-    border-radius: 1px;
-    transition: all 0.2s ease;
-    border: 2px solid transparent;
-    display: inline-block;
-  }
-  .cta-button:hover {
-    background: var(--paper);
-    color: var(--ink);
-    border-color: var(--ink);
-  }
+    .text {
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 1.125rem;
+      line-height: 1.9;
+      padding: 3rem 2rem;
+      text-align: left;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .text .inner { width: 100%; max-width: 720px; }
+    .bold-intro {
+      display: block;
+      font-weight: 700;
+      color: var(--brand);
+      font-size: clamp(1.6rem, 3.2vw, 3rem);
+      line-height: 1.25;
+      margin: 0 0 1rem;
+      letter-spacing: -0.01em;
+    }
+    .spacer { height: 0.5rem; width: 80px; background: var(--brand); margin: 0.75rem 0 1.25rem; border-radius: 2px; }
+    .text p { margin: 0 0 1rem; }
+    .text ul { margin: 0.25rem 0 1.25rem 1.25rem; padding: 0; }
+    .text li { margin: 0.35rem 0; }
 
-  /* 5) Mobile adjustments (hierarchy + spacing) */
-  @media (max-width: 900px) {
-    .row { flex-direction: column; }
-    .left, .right { width: 100%; }
-    .text { padding: 2rem 1.25rem; }
-    .intro-text { padding: 0 1.25rem 3rem; }
-  }
-</style>
+    /* 4) CTA section */
+    .cta-section { background: var(--paper); color: var(--ink); text-align: center; padding: 4rem 2rem 6rem; }
+    .cta-section h2 { font-size: clamp(2.2rem, 6vw, 4rem); color: var(--brand); margin: 0 0 2rem; line-height: 1.1; letter-spacing: -0.01em; }
+    .cta-section p { font-size: 1.125rem; margin: 0 auto 2.5rem; color: var(--ink); line-height: 1.85; max-width: 840px; padding: 0 1.25rem; }
+    .cta-button {
+      background: var(--brand);
+      color: var(--paper);
+      font-weight: 700;
+      font-size: clamp(1.25rem, 3.5vw, 2rem);
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border-radius: 1px;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+      display: inline-block;
+    }
+    .cta-button:hover { background: var(--paper); color: var(--ink); border-color: var(--ink); }
 
-<div class="services-wrapper">
-  <section class="services-section">
-    <h1>SERVICES</h1>
-    <p class="intro-text">
-      We partner with ambitious startups to transform high-potential ideas into high-impact brands, strategically built,
-      emotionally resonant, and globally scalable. From competitive analysis to creative execution, every step is designed
-      to give your brand the edge it needs to lead. Below you'll find our process, from positioning and strategy to
-      storytelling, identity design, and hands-on brand enablement.
-    </p>
+    /* 5) Mobile */
+    @media (max-width: 900px) {
+      .row { flex-direction: column; }
+      .left, .right { width: 100%; }
+      .text { padding: 2rem 1.25rem; }
+      .intro-text { padding: 0 1.25rem 3rem; }
+    }
+  </style>
 
-    <!-- Row 1 -->
-    <div class="row">
-      <div class="left image">
-        <picture>
-          <source srcset="/images/uploads/service1.jpg 1600w, /images/uploads/service1_1200.jpg 1200w, /images/uploads/service1_800.jpg 800w" sizes="(min-width: 1200px) 50vw, 100vw" />
-          <img src="/images/uploads/service1.jpg" alt="Competitive landscape mapping and customer insight analysis during discovery" loading="lazy" />
-        </picture>
-      </div>
-      <div class="right text">
-        <div class="inner">
-          <span class="bold-intro">First, we extract actionable intelligence.</span>
-          <div class="spacer"></div>
-          <p>Before any creative execution, we run a reconnaissance operation to decode your market landscape. We analyze
-          competitors, audit customer psychology, and identify whitespace opportunities your brand can own.</p>
-          <ul>
-            <li>Comparative analysis & customer behavior insights</li>
-            <li>Positioning statements & audience segmentation frameworks</li>
-            <li>Clear differentiation that's sustainable and relevant</li>
-          </ul>
-          <p>This stage removes guesswork and ensures the next steps align with market demand and audience behavior.</p>
+  <div class="services-wrapper">
+    <section class="services-section">
+      <h1>SERVICES</h1>
+      <p class="intro-text">
+        We partner with ambitious startups to transform high-potential ideas into high-impact brands, strategically built,
+        emotionally resonant, and globally scalable. From competitive analysis to creative execution, every step is designed
+        to give your brand the edge it needs to lead. Below you'll find our process, from positioning and strategy to
+        storytelling, identity design, and hands-on brand enablement.
+      </p>
+
+      <!-- Row 1 -->
+      <div class="row">
+        <div class="left image">
+          <picture>
+            <source srcset="/images/uploads/service1.jpg 1600w, /images/uploads/service1_1200.jpg 1200w, /images/uploads/service1_800.jpg 800w" sizes="(min-width: 1200px) 50vw, 100vw" />
+            <img src="/images/uploads/service1.jpg" alt="Competitive landscape mapping and customer insight analysis during discovery" loading="lazy" />
+          </picture>
+        </div>
+        <div class="right text">
+          <div class="inner">
+            <span class="bold-intro">First, we extract actionable intelligence.</span>
+            <div class="spacer"></div>
+            <p>Before any creative execution, we run a reconnaissance operation to decode your market landscape. We analyze
+            competitors, audit customer psychology, and identify whitespace opportunities your brand can own.</p>
+            <ul>
+              <li>Comparative analysis & customer behavior insights</li>
+              <li>Positioning statements & audience segmentation frameworks</li>
+              <li>Clear differentiation that's sustainable and relevant</li>
+            </ul>
+            <p>This stage removes guesswork and ensures the next steps align with market demand and audience behavior.</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Row 2 -->
-    <div class="row">
-      <div class="left text">
-        <div class="inner">
-          <span class="bold-intro">Brand visibility without control is just noise.</span>
-          <div class="spacer"></div>
-          <p>Once your position is clear, we design a tactical communication strategy that builds brand equity while
-          amplifying market presence. We define awareness objectives, launching, pivoting, or scaling, and map the right channels,
-          cadence, and voice.</p>
-          <ul>
-            <li>Media ecosystem planning & social media strategy</li>
-            <li>Narrative consistency & tone-of-voice calibration</li>
-            <li>Message hierarchy mapping tied to business objectives</li>
-          </ul>
-          <p>Every tactic is engineered for ROI, not just recognition. We shape perception so the market doesn't just see you, it understands you.</p>
+      <!-- Row 2 -->
+      <div class="row">
+        <div class="left text">
+          <div class="inner">
+            <span class="bold-intro">Brand visibility without control is just noise.</span>
+            <div class="spacer"></div>
+            <p>Once your position is clear, we design a tactical communication strategy that builds brand equity while
+            amplifying market presence. We define awareness objectives, launching, pivoting, or scaling, and map the right channels,
+            cadence, and voice.</p>
+            <ul>
+              <li>Media ecosystem planning & social media strategy</li>
+              <li>Narrative consistency & tone-of-voice calibration</li>
+              <li>Message hierarchy mapping tied to business objectives</li>
+            </ul>
+            <p>Every tactic is engineered for ROI, not just recognition. We shape perception so the market doesn't just see you, it understands you.</p>
+          </div>
+        </div>
+        <div class="right image">
+          <picture>
+            <source srcset="/images/uploads/service2.jpg 1600w, /images/uploads/service2_1200.jpg 1200w, /images/uploads/service2_800.jpg 800w" sizes="(min-width: 1200px) 50vw, 100vw" />
+            <img src="/images/uploads/service2.jpg" alt="Planning the channel mix and messaging cadence for brand awareness" loading="lazy" />
+          </picture>
         </div>
       </div>
-      <div class="right image">
-        <picture>
-          <source srcset="/images/uploads/service2.jpg 1600w, /images/uploads/service2_1200.jpg 1200w, /images/uploads/service2_800.jpg 800w" sizes="(min-width: 1200px) 50vw, 100vw" />
-          <img src="/images/uploads/service2.jpg" alt="Planning the channel mix and messaging cadence for brand awareness" loading="lazy" />
-        </picture>
-      </div>
-    </div>
 
-    <!-- Row 3 -->
-    <div class="row">
-      <div class="left image">
-        <picture>
-          <source srcset="/images/uploads/service3.jpg 1600w, /images/uploads/service3_1200.jpg 1200w, /images/uploads/service3_800.jpg 800w" sizes="(min-width: 1200px) 50vw, 100vw" />
-          <img src="/images/uploads/service3.jpg" alt="Narrative strategy workshop aligning founder story with market psychology" loading="lazy" />
-        </picture>
-      </div>
-      <div class="right text">
-        <div class="inner">
-          <span class="bold-intro">In the absence of a clear story, your product becomes negotiable.</span>
-          <div class="spacer"></div>
-          <p>We construct a brand narrative designed to endure. Your story won't just explain what you do, it will define how
-          the world talks about you across moments and mediums.</p>
-          <ul>
-            <li>Founder interviews & product context mapping</li>
-            <li>Archetype-aligned narrative frameworks</li>
-            <li>Messaging systems for decks, web, social, and investor materials</li>
-          </ul>
-          <p>The result is a scalable messaging system. No more improvisation, everyone communicates from the same playbook.</p>
+      <!-- Row 3 -->
+      <div class="row">
+        <div class="left image">
+          <picture>
+            <source srcset="/images/uploads/service3.jpg 1600w, /images/uploads/service3_1200.jpg 1200w, /images/uploads/service3_800.jpg 800w" sizes="(min-width: 1200px) 50vw, 100vw" />
+            <img src="/images/uploads/service3.jpg" alt="Narrative strategy workshop aligning founder story with market psychology" loading="lazy" />
+          </picture>
+        </div>
+        <div class="right text">
+          <div class="inner">
+            <span class="bold-intro">In the absence of a clear story, your product becomes negotiable.</span>
+            <div class="spacer"></div>
+            <p>We construct a brand narrative designed to endure. Your story won't just explain what you do, it will define how
+            the world talks about you across moments and mediums.</p>
+            <ul>
+              <li>Founder interviews & product context mapping</li>
+              <li>Archetype-aligned narrative frameworks</li>
+              <li>Messaging systems for decks, web, social, and investor materials</li>
+            </ul>
+            <p>The result is a scalable messaging system. No more improvisation, everyone communicates from the same playbook.</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Row 4 -->
-    <div class="row">
-      <div class="left text">
-        <div class="inner">
-          <span class="bold-intro">Design isn't decoration,it's operational infrastructure.</span>
-          <div class="spacer"></div>
-          <p>We build the visual and verbal assets that form the face of your brand. Not just ''making things look good,'' but
-          engineering identity systems that work across contexts.</p>
-          <ul>
-            <li>Logo suites, typographic hierarchies, brand marks</li>
-            <li>Tone-of-voice frameworks, photography direction, usage guidelines</li>
-            <li>AI-assisted iteration when it accelerates quality and clarity</li>
-          </ul>
-          <p>Everything ships in a comprehensive brand book so teams and partners apply the brand consistently across digital,
-          print, packaging, and motion, building equity with every impression.</p>
+      <!-- Row 4 -->
+      <div class="row">
+        <div class="left text">
+          <div class="inner">
+            <span class="bold-intro">Design isn't decoration,it's operational infrastructure.</span>
+            <div class="spacer"></div>
+            <p>We build the visual and verbal assets that form the face of your brand. Not just ''making things look good,'' but
+            engineering identity systems that work across contexts.</p>
+            <ul>
+              <li>Logo suites, typographic hierarchies, brand marks</li>
+              <li>Tone-of-voice frameworks, photography direction, usage guidelines</li>
+              <li>AI-assisted iteration when it accelerates quality and clarity</li>
+            </ul>
+            <p>Everything ships in a comprehensive brand book so teams and partners apply the brand consistently across digital,
+            print, packaging, and motion, building equity with every impression.</p>
+          </div>
+        </div>
+        <div class="right image">
+          <picture>
+            <source srcset="/images/uploads/service4.jpg 1600w, /images/uploads/service4_1200.jpg 1200w, /images/uploads/service4_800.jpg 800w" sizes="(min-width: 1200px) 50vw, 100vw" />
+            <img src="/images/uploads/service4.jpg" alt="Brand identity system guidelines across digital, print, and motion" loading="lazy" />
+          </picture>
         </div>
       </div>
-      <div class="right image">
-        <picture>
-          <source srcset="/images/uploads/service4.jpg 1600w, /images/uploads/service4_1200.jpg 1200w, /images/uploads/service4_800.jpg 800w" sizes="(min-width: 1200px) 50vw, 100vw" />
-          <img src="/images/uploads/service4.jpg" alt="Brand identity system guidelines across digital, print, and motion" loading="lazy" />
-        </picture>
-      </div>
-    </div>
 
-    <!-- Row 5 -->
-    <div class="row">
-      <div class="left image">
-        <picture>
-          <source srcset="/images/uploads/service5.jpg 1600w, /images/uploads/service5_1200.jpg 1200w, /images/uploads/service5_800.jpg 800w" sizes="(min-width: 1200px) 50vw, 100vw" />
-          <img src="/images/uploads/service5.jpg" alt="Team onboarding session to activate the brand across channels" loading="lazy" />
-        </picture>
-      </div>
-      <div class="right text">
-        <div class="inner">
-          <span class="bold-intro">We don't leave after the handoff, we embed.</span>
-          <div class="spacer"></div>
-          <p>After delivery, we support activation so the system actually lives. We train teams, advise on web and packaging,
-          and guide rollouts.</p>
-          <ul>
-            <li>Internal brand training & QA during launch phases</li>
-            <li>Site and packaging audits with implementation guidance</li>
-            <li>Introductions to trusted execution partners</li>
-          </ul>
-          <p>Our mission isn't file delivery, it's building brands that win. That takes more than a logo; it takes a long-term
-          ally in your corner.</p>
+      <!-- Row 5 -->
+      <div class="row">
+        <div class="left image">
+          <picture>
+            <source srcset="/images/uploads/service5.jpg 1600w, /images/uploads/service5_1200.jpg 1200w, /images/uploads/service5_800.jpg 800w" sizes="(min-width: 1200px) 50vw, 100vw" />
+            <img src="/images/uploads/service5.jpg" alt="Team onboarding session to activate the brand across channels" loading="lazy" />
+          </picture>
+        </div>
+        <div class="right text">
+          <div class="inner">
+            <span class="bold-intro">We don't leave after the handoff, we embed.</span>
+            <div class="spacer"></div>
+            <p>After delivery, we support activation so the system actually lives. We train teams, advise on web and packaging,
+            and guide rollouts.</p>
+            <ul>
+              <li>Internal brand training & QA during launch phases</li>
+              <li>Site and packaging audits with implementation guidance</li>
+              <li>Introductions to trusted execution partners</li>
+            </ul>
+            <p>Our mission isn't file delivery, it's building brands that win. That takes more than a logo; it takes a long-term
+            ally in your corner.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CTA -->
-  <section class="cta-section">
-    <h2>No Packages. Just Precision.</h2>
-    <p>At DoubleDown, we don't push cookie-cutter packages or bloat your scope. We tailor every engagement to what your brand
-    actually needs, nothing more, nothing less. Whether you're starting up or leveling up, we align strategy, creative, and
-    execution to match your ambition.</p>
-    <a href="/contact" class="cta-button">CONTACT US</a>
-  </section>
-</div>
-
-<Footer />
+    <!-- CTA -->
+    <section class="cta-section">
+      <h2>No Packages. Just Precision.</h2>
+      <p>At DoubleDown, we don't push cookie-cutter packages or bloat your scope. We tailor every engagement to what your brand
+      actually needs, nothing more, nothing less. Whether you're starting up or leveling up, we align strategy, creative, and
+      execution to match your ambition.</p>
+      <a href="/contact" class="cta-button">CONTACT US</a>
+    </section>
+  </div>
+</BaseLayout>
