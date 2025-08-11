@@ -77,7 +77,6 @@ const { title, intro, thank_you } = content.data;
       <p id="thankyou" class="thankyou" role="status" aria-live="polite">{thank_you}</p>
     </div>
   </section>
-<!--
 
   <script is:inline>
     function encode(d){return Object.keys(d).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(d[k])).join('&');}
@@ -89,11 +88,9 @@ const { title, intro, thank_you } = content.data;
       const payload={'form-name':form.getAttribute('name')};
       new FormData(form).forEach((v,k)=>payload[k]=v);
       try{
-        const res=await fetch(form.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:encode(payload)});
+        await fetch(form.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:encode(payload)});
         form.reset(); form.style.display='none'; thanks.classList.add('show'); thanks.focus?.();
       }catch(err){alert('Something went wrong, please try again.');}
     });
   </script>
-  -->
-
 </BaseLayout>

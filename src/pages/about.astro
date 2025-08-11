@@ -93,23 +93,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section>
     <div class="block">
       <h2>Industries We Work With</h2>
-      <p>
-        We partner with startups and emerging companies that are building fast, thinking big, and refusing to blend in. From ecommerce to edtech, our clients are
-        disruptors with big ambitions and the grit to match.
-      </p>
-      <p>
-        In ecommerce, we design systems that turn first-time visitors into loyal customers by positioning products to lead, not just sell. In real estate,
+      <p>We partner with startups and emerging companies that are building fast, thinking big, and refusing to blend in. From ecommerce to edtech, our clients are
+        disruptors with big ambitions and the grit to match.</p>
+      <p>In ecommerce, we design systems that turn first-time visitors into loyal customers by positioning products to lead, not just sell. In real estate,
         we help developers and property ventures stand out in crowded markets with identities that build trust and cut through sameness. In marine logistics,
-        we craft narratives that communicate scale, precision, and dependability across borders.
-      </p>
-      <p>
-        In food and health, we balance emotion with credibility, helping brands earn attention while staying grounded in trust and clarity. With toys and education,
-        we strike the right tone between play and purpose, designing identities that resonate with kids, parents, and institutions.
-      </p>
-      <p>
-        These sectors might seem different, but they share a need for strategic clarity and brand systems built to scale. If you are building in a space that moves fast
-        and demands more than generic design, we are built to help.
-      </p>
+        we craft narratives that communicate scale, precision, and dependability across borders.</p>
+      <p>In food and health, we balance emotion with credibility, helping brands earn attention while staying grounded in trust and clarity. With toys and education,
+        we strike the right tone between play and purpose, designing identities that resonate with kids, parents, and institutions.</p>
+      <p>These sectors might seem different, but they share a need for strategic clarity and brand systems built to scale. If you are building in a space that moves fast
+        and demands more than generic design, we are built to help.</p>
     </div>
   </section>
 
@@ -123,7 +115,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </p>
 
       <form id="download-form" name="download-form" method="POST"
-            action="/about" netlify>
+            action="/about" netlify
             style="display:flex; flex-direction:column; align-items:center; gap:1rem; max-width:400px; margin:1rem auto 0;">
         <input type="hidden" name="form-name" value="download-form" />
         <input type="text" name="name" placeholder="Your Name" required
@@ -136,7 +128,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </button>
       </form>
     </div>
-<!--
+
     <script is:inline>
       function encode(d){return Object.keys(d).map(k=>encodeURIComponent(k)+'='+encodeURIComponent(d[k])).join('&');}
       const form=document.getElementById('download-form');
@@ -146,10 +138,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         new FormData(form).forEach((v,k)=>payload[k]=v);
         try{
           await fetch(form.action,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:encode(payload)});
-          window.location.href='/portfolio.pdf';
+          window.location.href='/portfolio.pdf'; // ensure file exists at public/portfolio.pdf
         }catch(err){alert('Something went wrong. Please try again.');}
       });
     </script>
-    -->
   </section>
 </BaseLayout>
