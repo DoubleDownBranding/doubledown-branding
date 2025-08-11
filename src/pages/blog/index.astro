@@ -1,14 +1,17 @@
 ---
 export const prerender = true;
----
----
+
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 let posts = await getCollection('blog');
-// Sort newest first if not already sorted
-posts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+posts = posts.sort((a, b) => {
+  const da = a.data.date ? new Date(a.data.date).getTime() : 0;
+  const db = b.data.date ? new Date(b.data.date).getTime() : 0;
+  return db - da;
+});
 ---
+
 <BaseLayout>
   <title slot="title">The Blog</title>
 
