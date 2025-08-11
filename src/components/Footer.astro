@@ -1,14 +1,133 @@
----
-import SocialIcons from './SocialIcons.astro';
----
+<footer class="footer" role="contentinfo">
+  <div class="footer-container">
+    <!-- Left -->
+    <div class="footer-left">
+      <img src="/images/uploads/footerlogo.png" alt="DoubleDown Branding logo" class="footer-logo" />
+      <p class="footer-text">
+        At DoubleDown Branding, we create strategy driven brand identities that help startups and funded businesses in the UAE and beyond stand out. Our team combines brand strategy, storytelling, and visual design to build memorable brands that attract customers and investors. Ready to elevate your brand and grow your business? Partner with DoubleDown Branding, a trusted branding agency for ambitious founders.
+      </p>
+    </div>
 
-<footer>
-  <nav>
-    <a href="/">Home</a> |
-    <a href="/about">About</a> |
-    <a href="/blog">Blog</a> |
-    <a href="/contact">Contact</a>
-  </nav>
-  <SocialIcons />
-  <p>&copy; 2025 DoubleDown Branding</p>
+    <!-- Right -->
+    <div class="footer-right">
+      <h4 class="footer-heading">
+        <a href="/blog" class="footer-link">Field Research</a>
+      </h4>
+      <div class="footer-contact" aria-label="Contact details">
+        <p><strong>Email:</strong> <a class="footer-contact-link" href="mailto:chriscallaway@doubledownbranding.com">chriscallaway@doubledownbranding.com</a></p>
+        <p><strong>WhatsApp:</strong> <a class="footer-contact-link" href="https://wa.me/971567310950" target="_blank" rel="noopener">+971 56 731 0950</a></p>
+        <p><strong>Address:</strong> Abu Hail, Dubai, UAE</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="footer-bottom">&copy; DOUBLEDOWNBRANDING 2025</p>
 </footer>
+
+<style>
+  :root {
+    --ink: #0D1A5A;
+    --paper: #f6e4cc;
+    --accent: #ef3741;
+    --muted: #e5e5e5;
+  }
+
+  .footer {
+    background-color: var(--ink);
+    color: #fff;
+    font-family: 'Gotham', sans-serif;
+    padding: 2rem 1rem;
+  }
+
+  .footer-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-left {
+    flex: 1 1 60%;
+    text-align: left;
+    min-width: 260px;
+  }
+
+  .footer-right {
+    flex: 1 1 30%;
+    text-align: left;
+    min-width: 220px;
+  }
+
+  .footer-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .footer-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 540px;
+    text-align: left; /* reading comfort */
+  }
+
+  .footer-heading {
+    font-size: 1rem;
+    margin: 0 0 1rem;
+    color: #fff;
+  }
+
+  .footer-link {
+    text-decoration: none;
+    color: var(--paper);
+    font-weight: 700;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+  }
+  .footer-link:hover,
+  .footer-link:focus-visible {
+    color: var(--accent);
+    outline: none;
+  }
+
+  .footer-contact {
+    text-align: left;
+  }
+  .footer-contact p {
+    margin: 0.5rem 0;
+    font-size: 0.95rem;
+    color: #fff;
+  }
+
+  .footer-contact-link {
+    color: var(--paper);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .footer-contact-link:hover,
+  .footer-contact-link:focus-visible {
+    color: var(--accent);
+    outline: none;
+  }
+
+  .footer-bottom {
+    max-width: 1280px;
+    margin: 2rem auto 0;
+    font-size: 0.85rem;
+    color: #fff;
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .footer-right { margin-top: 1rem; }
+  }
+</style>

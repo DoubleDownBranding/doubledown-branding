@@ -13,19 +13,120 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.props;
 const post = await getEntryBySlug('blog', slug);
-
 if (!post) throw new AstroError('Post not found');
 
-const { title, date } = post.data;
+const { title, date, thumbnail } = post.data;
 const body = post.body;
----
 
+// Optional, nicely formatted date
+const formattedDate = date ? new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+---
 <BaseLayout>
   <title slot="title">{title}</title>
 
-  <article style="padding: 4rem 1rem; max-width: 700px; margin: auto;">
-    <h1>{title}</h1>
-    <p><small>{date}</small></p>
-    <div innerHTML={body} />
-  </article>
+  <style>
+    :root {
+      --ink: #0D1A5A;
+      --paper: #f6e4cc;
+      --accent: #ef3741;
+    }
+    .wrap {
+      padding: 3rem 1rem 5rem;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .post-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.1;
+      margin: 0 0 0.5rem;
+      color: var(--ink);
+      font-weight: 700;
+      text-align: left;
+    }
+    .meta {
+      color: rgba(13,26,90,0.8);
+      margin: 0 0 1.5rem;
+      font-size: 0.95rem;
+    }
+    .hero {
+      margin: 0 0 1.5rem;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .hero img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* Body content defaults */
+    .content :where(p, ul, ol, blockquote, pre, table, h2, h3, h4, img) {
+      margin: 0 0 1.15rem;
+    }
+    .content p {
+      line-height: 1.85;
+      font-size: 1.1rem;
+      color: var(--ink);
+    }
+    .content h2 {
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      margin-top: 2rem;
+      color: var(--ink);
+    }
+    .content h3 {
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+      margin-top: 1.25rem;
+      color: var(--ink);
+    }
+    .content ul, .content ol {
+      padding-left: 1.25rem;
+      line-height: 1.75;
+    }
+    .content a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .content pre, .content code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .content pre {
+      padding: 1rem;
+      background: #fff;
+      border: 1px solid rgba(13,26,90,0.15);
+      border-radius: 4px;
+      overflow: auto;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 1.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      border-bottom: 2px solid transparent;
+    }
+    .back:hover, .back:focus-visible {
+      border-bottom-color: var(--accent);
+      outline: none;
+    }
+  </style>
+
+  <main id="main" class="wrap">
+    <article class="container" itemscope itemtype="https://schema.org/Article">
+      <h1 class="post-title" itemprop="headline">{title}</h1>
+      {formattedDate && <p class="meta"><time datetime={new Date(date).toISOString()} itemprop="datePublished">{formattedDate}</time></p>}
+
+      {thumbnail && (
+        <div class="hero">
+          <img src={thumbnail} alt={`${title} header image`} loading="eager" />
+        </div>
+      )}
+
+      <div class="content" innerHTML={body} itemprop="articleBody" />
+      <a href="/blog" class="back" aria-label="Back to blog">Back to Blog</a>
+    </article>
+  </main>
 </BaseLayout>

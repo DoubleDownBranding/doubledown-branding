@@ -1,36 +1,262 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getEntryBySlug } from 'astro:content';
-
-const content = await getEntryBySlug('about', 'about');
-if (!content) throw new Error('Content not found for about/about.md');
-
-const { headline, cta_text, thank_you } = content.data;
 ---
 <BaseLayout>
   <title slot="title">About - DoubleDown Branding</title>
 
-  <section style="padding: 4rem 1rem;">
-    <h1>{headline}</h1>
-    <article>
-      <content.Component />
-    </article>
+  <style>
+    :root {
+      --ink: #0D1A5A;
+      --paper: #f6e4cc;
+      --accent: #ef3741;
+    }
+
+    body {
+      font-family: 'Gotham', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-color: var(--paper);
+      color: var(--ink);
+    }
+
+    * { box-sizing: border-box; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    section {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    /* 1) Heading hierarchy: one H1; all others are H2 */
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 0 5rem;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0 0 5rem;
+      line-height: 1.2;
+    }
+
+    p {
+      font-weight: 400;
+      font-size: 1.125rem;
+      margin: 0 auto 1.25rem;
+      line-height: 1.85;
+      max-width: 1000px;
+      text-align: left;
+    }
+
+    .centered p { text-align: center; }
+
+    .image-section {
+      width: 100%;
+      margin: 2rem 0 0;
+      padding: 0;
+    }
+
+    /* Spacing helpers for clearer section separation */
+    .block {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* 4) Mobile readability already handled by clamp() and tighter padding below */
+    @media (max-width: 768px) {
+      section { padding: 2rem 1rem; }
+      p { max-width: 700px; }
+    }
+
+    /* Download CTA */
+    .download-cta h1 { margin-bottom: 0.5rem; }
+    .download-cta p.top { margin-bottom: 1rem; }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 1.25rem;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: var(--paper);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      border: 2px solid transparent;
+      border-radius: 1px;
+      transition: all 0.2s ease;
+    }
+    .download-btn:hover {
+      background: var(--paper);
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+  </style>
+
+  <!-- Hero -->
+  <section class="centered">
+    <div class="block">
+      <h1>We Believe Your Business Can Change the World</h1>
+      <h2>Because we have seen it happen</h2>
+      <p class="centered">
+        The right message, at the right time, can shift hearts, and rally entire movements.
+        Your brand has the potential to lead, inspire, and drive meaningful change. Let us double down on that.
+      </p>
+    </div>
   </section>
 
-  <section style="padding: 2rem;">
-    <form method="POST" name="download-form" data-netlify="true">
-      <input type="hidden" name="form-name" value="download-form" />
-      <label>
-        Name <input type="text" name="name" required />
-      </label>
-      <label>
-        Last Name <input type="text" name="lastname" required />
-      </label>
-      <label>
-        Email <input type="email" name="email" required />
-      </label>
-      <button type="submit">{cta_text}</button>
-    </form>
-    <p>{thank_you}</p>
+  <!-- Full-width Image -->
+  <section class="image-section" aria-label="Studio in action">
+    <img src="public/images/uploads/about-image1.jpg" alt="DoubleDown team working with a founder on brand strategy" />
   </section>
+
+  <!-- Experience -->
+  <section class="centered">
+    <div class="block">
+      <h2>We Have Been Helping Startups Win for a Decade</h2>
+      <p class="centered">
+        We have spent years in the trenches with ambitious founders, navigating pivots, launches, and scale-ups.
+        Our edge is strategy-led design that builds traction, not just pretty pixels. We are not here for vanity, we are here for velocity.
+      </p>
+    </div>
+  </section>
+
+  <!-- Branding Matters -->
+  <section class="centered">
+    <div class="block">
+      <h2>Branding Makes a Measurable Difference</h2>
+      <p class="centered">
+        A strong brand is not just a look, it is a system that aligns vision, voice, and visuals into one powerful force.
+        We design for clarity and cohesion so your story lands across every touchpoint, globally, consistently, and memorably.
+      </p>
+    </div>
+  </section>
+
+  <!-- Founder -->
+  <section class="centered">
+    <div class="block">
+      <h2>Meet the Founder</h2>
+      <p class="centered">
+        This company was built by a founder, for founders. I am Chris Callaway. With over a decade helping early-stage teams find their voice and their edge,
+        I bring a strategic eye and a hands-on approach to solving brand problems. I am not just here to make you look good, I am here to make you impossible to ignore.
+      </p>
+    </div>
+  </section>
+
+  <!-- Full-width Image -->
+  <section class="image-section" aria-label="Founder with client">
+    <img src="public/images/uploads/about-image2.jpg" alt="Founder Chris Callaway reviewing identity work with a client" />
+  </section>
+
+  <!-- Who We Are -->
+  <section class="centered">
+    <div class="block">
+      <h2>Who We Are</h2>
+      <p class="centered">
+        We are brand strategists, designers, and builders. Equal parts creative and analytical, we thrive where business goals meet bold expression.
+        Our mission is to turn startups into world-beaters by making them unforgettable.
+      </p>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section>
+    <div class="block">
+      <h2>Industries We Work With</h2>
+      <p>
+        We partner with startups and emerging companies that are building fast, thinking big, and refusing to blend in. From ecommerce to edtech, our clients are
+        disruptors with big ambitions and the grit to match.
+      </p>
+      <p>
+        In ecommerce, we design systems that turn first-time visitors into loyal customers by positioning products to lead, not just sell. In real estate,
+        we help developers and property ventures stand out in crowded markets with identities that build trust and cut through sameness. In marine logistics,
+        we craft narratives that communicate scale, precision, and dependability across borders.
+      </p>
+      <p>
+        In food and health, we balance emotion with credibility, helping brands earn attention while staying grounded in trust and clarity. With toys and education,
+        we strike the right tone between play and purpose, designing identities that resonate with kids, parents, and institutions.
+      </p>
+      <p>
+        These sectors might seem different, but they share a need for strategic clarity and brand systems built to scale. If you are building in a space that moves fast
+        and demands more than generic design, we are built to help.
+      </p>
+    </div>
+  </section>
+
+  <!-- Download Portfolio (button now downloads directly, text under removed) -->
+  <section class="download-cta centered">
+    <div class="block">
+  
+
+      <!-- Download Portfolio -->
+    <h1 style="font-size: clamp(2.5rem, 8vw, 6rem); color: #ef3741; margin: 0 0 5rem;">Download Our Portfolio</h1>
+    <p class="top centered" style="font-size: 1.125rem; line-height: 1.85; max-width: 1000px; margin: 0 auto 4rem;">
+      See how we turn strategy into brand power. Inside, you will find how we work, what we build, and how we help ambitious businesses scale with clarity and confidence.
+      The PDF includes tailored case studies that show the kind of brand systems we create for companies ready to level up.
+    </p>
+
+    <!-- Netlify form + direct download on success -->
+    <form id="download-form" name="download-form" method="POST" data-netlify="true"
+      style="display: flex; flex-direction: column; align-items: center; gap: 1rem; max-width: 400px; margin: 1rem auto 0;">
+      <input type="hidden" name="form-name" value="download-form" />
+
+      <input
+        type="text"
+        name="name"
+        placeholder="Your Name"
+        required
+        style="padding: 1rem; width: 100%; border: 1px solid #ccc; font-size: 1rem; margin-bottom: 0.5rem;" />
+
+      <input
+        type="email"
+        name="email"
+        placeholder="Your Email"
+        required
+        style="padding: 1rem; width: 100%; border: 1px solid #ccc; font-size: 1rem; margin-bottom: 2rem;" />
+
+      <!-- Same style as before, now triggers download after submit -->
+      <button id="download-btn" type="submit"
+        style="padding: 0.75rem 2rem; background: #ef3741; color: #f6e4cc; border: none; font-weight: bold; font-size: 2rem; cursor: pointer; border-radius: 1px; transition: all 0.2s ease; border: 2px solid transparent;">
+        Download Portfolio
+      </button>
+    </form>
+  </div>
+
+  <script is:inline>
+    // Netlify form submit, then download file
+    function encode(data) {
+      return Object.keys(data)
+        .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+        .join('&');
+    }
+
+    const form = document.getElementById('download-form');
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const payload = { 'form-name': form.getAttribute('name') };
+      formData.forEach((value, key) => (payload[key] = value));
+
+      try {
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode(payload),
+        });
+        // Trigger the download after successful submission
+        window.location.href = 'public/Portfolio.pdf';
+      } catch (err) {
+        // Optional: show a simple fallback alert
+        alert('Something went wrong. Please try again.');
+      }
+    });
+  </script>
+</section>
+
 </BaseLayout>

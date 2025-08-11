@@ -4,20 +4,106 @@
   --color-light-bg: #fdf6ed;
   --font-main: 'Arial Black', sans-serif;
 }
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-Thin.woff2) format('woff2');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-ThinItalic.woff2) format('woff2');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-ExtraLight.woff2) format('woff2');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-ExtraLightItalic.woff2) format('woff2');
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-Light.woff2) format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-LightItalic.woff2) format('woff2');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-Book.woff2) format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-Medium.woff2) format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-MediumItalic.woff2) format('woff2');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-Ultra.woff2) format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-UltraItalic.woff2) format('woff2');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Gotham';
+  src: url(public/fonts/Gotham-BoldItalic.woff2) format('woff2');
+  font-weight: 800;
+  font-style: italic;
+}
 
 body {
+  font-family: 'Gotham', sans-serif;
   margin: 0;
   padding: 0;
-  font-family: var(--font-main);
   background: var(--color-light-bg);
   color: var(--color-dark-blue);
 }
 
 h1, h2, h3 {
+  font-family: 'Gotham', sans-serif;
   font-weight: bold;
+  font-size: 3rem;
 }
 
 a {
+  font-family: 'Gotham', sans-serif;
   color: var(--color-dark-blue);
   text-decoration: none;
 }

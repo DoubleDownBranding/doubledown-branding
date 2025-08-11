@@ -1,26 +1,239 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getEntryBySlug } from 'astro:content';
+
 const content = await getEntryBySlug('contact', 'contact');
+
+if (!content || !content.data) {
+  throw new Error('Contact content not found or invalid.');
+}
+
 const { title, intro, thank_you } = content.data;
 ---
-
 <BaseLayout>
   <title slot="title">Contact - DoubleDown Branding</title>
 
-  <section style="padding: 4rem 1rem;">
-    <h1>{title}</h1>
-    <p>{intro}</p>
+  <style>
+    :root {
+      --ink: #0D1A5A;
+      --paper: #f6e4cc;
+      --accent: #ef3741;
+      --radius: 4px;
+      --gap-lg: 7rem;
+      --gap-md: 2rem;
+      --gap-sm: 1rem;
+    }
 
-    <form name="contact" method="POST" data-netlify="true">
-      <input type="hidden" name="form-name" value="contact" />
-      <label>Name <input type="text" name="name" required /></label>
-      <label>Email <input type="email" name="email" required /></label>
-      <label>Subject/Company <input type="text" name="subject" /></label>
-      <label>Message <textarea name="message"></textarea></label>
-      <button type="submit">Send</button>
-    </form>
+    body {
+      font-family: 'Gotham', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-color: var(--paper);
+      color: var(--ink);
+    }
 
-    <p>{thank_you}</p>
+    /* Header image */
+    .hero {
+      width: 100%;
+      overflow: hidden;
+      background-color: var(--paper);
+    }
+    .hero img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    /* Content wrapper */
+    .contact-wrap {
+      background: var(--paper);
+      color: var(--ink);
+      padding: var(--gap-lg) 1rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    h1 {
+      margin: 0 0 var(--gap-md);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .intro {
+      margin: 0 auto var(--gap-lg);
+      line-height: 1.8;
+      font-size: 1.125rem;
+      max-width: 720px;
+    }
+
+    /* Form */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      align-items: center;
+      text-align: left;
+    }
+    .field {
+      width: 100%;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.85rem 0.9rem;
+      border: 1px solid rgba(13, 26, 90, 0.25);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+    }
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(13, 26, 90, 0.12);
+    }
+
+    /* Button */
+    .btn {
+      padding: 0.9rem 3rem;
+      margin-top: 0.5rem;
+      font-size: 1.25rem;
+      background-color: var(--accent);
+      color: var(--paper);
+      font-weight: 700;
+      border: 2px solid transparent;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background: var(--paper);
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    /* Honeypot */
+    .hidden {
+      position: absolute !important;
+      left: -10000px !important;
+      top: auto !important;
+      width: 1px !important;
+      height: 1px !important;
+      overflow: hidden !important;
+    }
+
+    /* Thank you state, hidden by default, announced on reveal */
+    .thankyou {
+      display: none;
+      margin-top: var(--gap-md);
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+    .thankyou.show {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .contact-wrap { padding: 3.5rem 1rem; }
+      .intro { margin-bottom: 3rem; }
+      .btn { width: 100%; }
+    }
+  </style>
+
+  <!-- Full-width image section -->
+  <section class="hero" aria-label="Get in touch">
+    <img 
+      src="public/images/uploads/contact-header.jpg" 
+      alt="Abstract brand visual representing contact"
+    />
   </section>
+
+  <!-- Contact content and form -->
+  <section class="contact-wrap">
+    <div class="container">
+      <h1>{title}</h1>
+      <p class="intro">{intro}</p>
+
+      <form id="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact" />
+
+        <!-- Honeypot -->
+        <p class="hidden">
+          <label>Do not fill this out if you are human
+            <input name="bot-field" />
+          </label>
+        </p>
+
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+
+        <div class="field">
+          <label for="subject">Subject, Company</label>
+          <input id="subject" name="subject" type="text" required autocomplete="organization-title" />
+        </div>
+
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <button class="btn" type="submit">Send</button>
+      </form>
+
+      <!-- Thank you message, shown after successful submit -->
+      <p id="thankyou" class="thankyou" role="status" aria-live="polite">{thank_you}</p>
+    </div>
+  </section>
+
+  <!-- Inline, tiny enhancement: submit to Netlify, then reveal thank you -->
+  <script is:inline>
+    function encode(data) {
+      return Object.keys(data)
+        .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+        .join('&');
+    }
+
+    const form = document.getElementById('contact-form');
+    const thanks = document.getElementById('thankyou');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const payload = { 'form-name': form.getAttribute('name') };
+      formData.forEach((value, key) => (payload[key] = value));
+
+      try {
+        await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode(payload),
+        });
+        form.reset();
+        form.style.display = 'none';
+        thanks.classList.add('show');
+        thanks.focus?.();
+      } catch (err) {
+        alert('Something went wrong, please try again.');
+      }
+    });
+  </script>
 </BaseLayout>

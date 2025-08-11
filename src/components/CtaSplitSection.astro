@@ -1,0 +1,118 @@
+<section class="cta-split">
+  <style>
+    .cta-split {
+      width: 100%;
+      background-color: #f6e4cc;
+      margin: 0;
+    }
+
+    .cta-inner {
+      display: flex;
+      flex-direction: column;     /* mobile: stack */
+      align-items: stretch;
+      max-width: 2000px;
+      margin: 0 auto;
+    }
+
+    .col { width: 100%; }
+
+    /* Image column */
+    .image-col {
+      order: 2;                   /* mobile: image after text */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f6e4cc;
+      overflow: hidden;
+    }
+    .image-col img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;        /* keeps your poster intact */
+      object-position: center;
+      max-height: 520px;          /* prevents giant image on small screens */
+    }
+
+    /* Text column */
+    .text-col {
+      order: 1;                   /* mobile: text first */
+      background-color: #f6e4cc;
+      color: #0D1A5A;
+      font-family: 'Gotham', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+      padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem);
+    }
+    .text-wrap { max-width: 600px; }
+    .text-col h2 {
+      font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+      margin: 0 0 1rem 0;
+    }
+    .text-col p {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      line-height: 1.6;
+      margin: 0 0 2rem 0;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background-color: #ef3741;
+      color: #f6e4cc;
+      padding: 0.75rem 2rem;
+      font-size: clamp(1.1rem, 2.4vw, 2rem);
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 1px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cta-btn:hover {
+      background-color: #f6e4cc;
+      color: #0D1A5A;
+      border-color: #0D1A5A;
+    }
+
+    /* Desktop / tablet: split layout with image left, text right */
+    @media (min-width: 900px) {
+      .cta-inner {
+        flex-direction: row;
+        min-height: 520px;        /* presence without forcing 800px */
+      }
+      .col { width: 50%; }
+
+      .image-col { order: 1; }    /* desktop: image left */
+      .text-col  { order: 2; }    /* desktop: text right */
+
+      .image-col img {
+        max-height: none;         /* let it fill the half */
+        object-fit: contain;      /* change to 'cover' if you prefer edge-to-edge */
+      }
+    }
+  </style>
+
+  <div class="cta-inner">
+    <!-- Left: Image (on desktop) -->
+    <div class="col image-col">
+      <img
+        src="/images/uploads/homepagecta.png"
+        alt="Brand strategy session"
+        loading="lazy"
+      />
+    </div>
+
+    <!-- Right: Text (on desktop) -->
+    <div class="col text-col">
+      <div class="text-wrap">
+        <h2>Where Big Visions Get Backed.</h2>
+        <p>
+          You are building something bold, not just a product, but a brand that people believe in. A movement. A mission. Even the most ambitious vision can lose momentum without clarity. That is where we come in. We work with founders who are all in, who need sharper focus, clearer messaging, and a brand that scales with them. Together, we turn emotion into strategic, visual firepower.
+        </p>
+        <a href="/about" class="cta-btn">Meet the Strategist</a>
+      </div>
+    </div>
+  </div>
+</section>

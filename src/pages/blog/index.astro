@@ -1,25 +1,139 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-const posts = await getCollection('blog');
----
 
+let posts = await getCollection('blog');
+// Sort newest first if not already sorted
+posts = posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
 <BaseLayout>
   <title slot="title">The Blog</title>
 
-  <section style="background: #111; color: white; padding: 4rem 1rem; text-align: center;">
-    <h1>The Blog</h1>
+  <style>
+    :root {
+      --ink: #0D1A5A;
+      --paper: #f6e4cc;
+      --accent: #ef3741;
+    }
+    .hero {
+      width: 100%;
+      overflow: hidden;
+      background-color: var(--paper);
+    }
+    .hero img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .wrap {
+      padding: 2rem 1rem 4rem;
+      background: var(--paper);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid rgba(13,26,90,0.15);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+    }
+    .card:hover,
+    .card:focus-within {
+      transform: translateY(-2px);
+      border-color: rgba(13,26,90,0.3);
+      box-shadow: 0 8px 22px rgba(13,26,90,0.12);
+    }
+
+    .thumb {
+      aspect-ratio: 16 / 9;
+      background: #ddd;
+      overflow: hidden;
+    }
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 1rem 1rem 1.25rem;
+    }
+    .card-title {
+      font-size: 1.2rem;
+      line-height: 1.25;
+      margin: 0 0 0.25rem;
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .card-meta {
+      font-size: 0.9rem;
+      color: rgba(13,26,90,0.75);
+      margin: 0 0 0.5rem;
+    }
+
+    .card-link {
+      position: relative;
+      display: block;
+      color: inherit;
+      text-decoration: none;
+      outline: none;
+    }
+    .card-link:focus-visible {
+      box-shadow: 0 0 0 3px rgba(239,55,65,0.35) inset;
+    }
+  </style>
+
+  <!-- Header image -->
+  <section class="hero" aria-label="Blog header">
+    <img 
+      src="/images/uploads/blog-header.jpg" 
+      alt="Blog header image" 
+      loading="eager"
+    />
   </section>
 
-  <section style="display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding: 2rem;">
-    {posts.map(post => (
-      <a href={`/blog/${post.slug}/`} style="text-decoration: none; color: inherit;">
-        <div>
-          <img src={post.data.thumbnail} alt="" style="width: 100%;" />
-          <h2>{post.data.title}</h2>
-          <p style="font-size: 0.85rem;">{post.data.date}</p>
-        </div>
-      </a>
-    ))}
+  <!-- Posts grid -->
+  <section class="wrap">
+    <div class="container">
+      <div class="grid">
+        {posts.map((post) => {
+          const title = post.data.title;
+          const date = post.data.date;
+          const formattedDate = date ? new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+          const href = `/blog/${post.slug}/`;
+          const thumb = post.data.thumbnail;
+
+          return (
+            <article class="card" itemscope itemtype="https://schema.org/BlogPosting">
+              <a href={href} class="card-link" aria-label={`Read ${title}`}>
+                <div class="thumb">
+                  {thumb ? (
+                    <img src={thumb} alt={`${title} thumbnail`} loading="lazy" />
+                  ) : (
+                    <img src="/images/uploads/blog-fallback.jpg" alt="Blog post thumbnail" loading="lazy" />
+                  )}
+                </div>
+                <div class="card-body">
+                  <h2 class="card-title" itemprop="headline">{title}</h2>
+                  {formattedDate && <p class="card-meta"><time datetime={new Date(date).toISOString()} itemprop="datePublished">{formattedDate}</time></p>}
+                </div>
+              </a>
+            </article>
+          );
+        })}
+      </div>
+    </div>
   </section>
 </BaseLayout>

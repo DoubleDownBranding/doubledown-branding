@@ -1,15 +1,150 @@
 ---
 const socialLinks = [
-  { href: "https://instagram.com", label: "Instagram", icon: "/images/uploads/instagram.svg" },
-  { href: "https://youtube.com", label: "YouTube", icon: "/images/uploads/youtube.svg" },
-  { href: "https://linkedin.com", label: "LinkedIn", icon: "/images/uploads/linkedin.svg" }
+  {
+    href: 'https://instagram.com',
+    label: 'INSTAGRAM',
+    handle: '@DOUBLEDOWNBRANDING',
+    icon: '/images/uploads/instagram.png',
+    description: 'Follow DoubleDown on Instagram for a daily reason not to quit.',
+    showBorder: true,
+  },
+  {
+    href: 'https://linkedin.com',
+    label: 'LINKEDIN',
+    handle: 'CHRIS CALLAWAY',
+    icon: '/images/uploads/linkedin.png',
+    description: 'Follow me on LinkedIn for behind the scenes thinking, real founder lessons, and unfiltered takes on building brands that hit different.',
+    showBorder: true,
+  },
+  {
+    href: 'https://instagram.com',
+    label: 'INSTAGRAM',
+    handle: '@CHRISCALLAWAYBRANDING',
+    icon: '/images/uploads/instagram.png',
+    description: 'Follow me on Instagram, where I learn on the job.',
+    showBorder: false,
+  },
 ];
 ---
 
-<div style="margin-top: 1rem;">
-  {socialLinks.map(link => (
-    <a href={link.href} target="_blank" rel="noopener" style="margin: 0 0.5rem;">
-      <img src={link.icon} alt={link.label} width="24" height="24" />
+<style>
+  .social-section {
+    --brand-bg: #f6e4cc;
+    --brand-ink: #0D1A5A;
+    --brand-accent: #ef3741;
+
+    background-color: var(--brand-bg);
+    padding: clamp(2rem, 6vw, 6rem) clamp(1rem, 5vw, 2rem);
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+    align-items: stretch;
+  }
+
+  /* Card block (bigger tap target, subtle hover) */
+  .social-block {
+    display: grid;
+    grid-template-rows: auto auto auto 1fr;
+    place-items: center;
+    text-align: center;
+
+    padding: clamp(1rem, 3vw, 2rem);
+    text-decoration: none;
+    background: transparent;
+    border-right: none;
+    position: relative;
+
+    transition: transform 0.15s ease, background-color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .social-block:hover {
+    background-color: rgba(13, 26, 90, 0.05);
+    transform: translateY(-2px);
+  }
+  .social-block:focus-visible {
+    outline: 3px solid var(--brand-accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  /* Optional vertical dividers for desktop */
+  .with-divider {
+    border-right: 1px solid var(--brand-ink);
+  }
+
+  .social-icon {
+    width: clamp(40px, 6vw, 56px);
+    height: clamp(40px, 6vw, 56px);
+    margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+    display: block;
+  }
+
+  .social-label {
+    font-family: 'Gotham', sans-serif;
+    font-weight: bold;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    color: var(--brand-ink);
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.06em;
+  }
+
+  .social-handle {
+    font-family: 'Gotham', sans-serif;
+    font-weight: bold;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: var(--brand-ink);
+  }
+
+  .social-description {
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+    font-family: 'Gotham', sans-serif;
+    margin-top: clamp(1rem, 2vw, 1.5rem);
+    color: #000;
+    line-height: 1.5;
+    max-width: 36ch;
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .social-section {
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+    }
+    .with-divider {
+      border-right: none; /* avoid odd middle divider on 2-col */
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    .social-section {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .social-block {
+      border-right: none !important;
+      border-bottom: 1px solid var(--brand-ink);
+      padding-bottom: 1.5rem;
+    }
+    .social-block:last-child {
+      border-bottom: none;
+    }
+  }
+</style>
+
+<div class="social-section">
+  {socialLinks.map((link, idx) => (
+    <a
+      href={link.href}
+      class={`social-block ${link.showBorder ? 'with-divider' : ''}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${link.label} ${link.handle}`}
+    >
+      <img src={link.icon} alt={`${link.label} icon`} class="social-icon" loading="lazy" />
+      <div class="social-label">{link.label}</div>
+      <div class="social-handle">{link.handle}</div>
+      <div class="social-description">{link.description}</div>
     </a>
   ))}
 </div>

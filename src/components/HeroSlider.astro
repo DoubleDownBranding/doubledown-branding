@@ -1,0 +1,153 @@
+---
+export interface Props { ctaText: string }
+const { ctaText } = Astro.props;
+---
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+
+<style>
+  :global(html), :global(body) { margin: 0; padding: 0; overflow-x: hidden; }
+
+  /* Keep a tall, cinematic hero but prevent overflow on small screens */
+  :global(.hero-swiper) {
+    width: 100vw;
+    height: min(1080px, 100svh); /* aims for 1080px, caps at viewport on mobile */
+    position: relative;
+    overflow: hidden;
+    background: #0D1A5A; /* fallback */
+  }
+  :global(.hero-swiper .swiper-wrapper) { width: 100%; height: 100%; }
+  :global(.hero-swiper .swiper-slide) {
+    width: 100%; height: 100%; position: relative;
+  }
+
+  /* Ensure picture fills the slide cleanly */
+  :global(.hero-slide-media),
+  :global(.hero-slide-media img) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;         /* crops safely if widths differ */
+    object-position: center;   /* adjust per poster need if you like */
+    background: #0D1A5A;
+  }
+
+  /* CTA */
+  :global(.cta-button) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ef3741;
+  color: #f6e4cc;
+  font-size: clamp(1.1rem, 3.2vw, 2rem);
+  padding: 0.85rem 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: all .2s ease;
+  z-index: 20;
+  -webkit-tap-highlight-color: transparent;
+  text-align: center;
+  white-space: nowrap;
+  bottom: 3rem;
+  top: auto;
+}
+
+:global(.cta-button:hover) {
+  background: #f6e4cc;
+  color: #0D1A5A;
+  border-color: #0D1A5A;
+}
+
+
+  /* Invisible but clickable navigation */
+  :global(.swiper-button-next::after),
+  :global(.swiper-button-prev::after) { content: ''; } /* remove default icons */
+
+  :global(.swiper-button-next),
+  :global(.swiper-button-prev) {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 56px; height: 56px; z-index: 25;
+    background: transparent; border: 0; cursor: pointer;
+    opacity: 0;              /* invisible */
+    pointer-events: auto;    /* still clickable */
+    -webkit-tap-highlight-color: transparent;
+  }
+  :global(.swiper-button-prev) { left: 0.5rem; }
+  :global(.swiper-button-next) { right: 0.5rem; }
+  @media (max-width: 560px) {
+    :global(.swiper-button-next), :global(.swiper-button-prev) { width: 44px; height: 44px; }
+  }
+
+  /* Optional: show when keyboard focusing for accessibility */
+  :global(.swiper-button-next:focus-visible),
+  :global(.swiper-button-prev:focus-visible) {
+    opacity: 1;
+    outline: 2px solid #ef3741;
+    outline-offset: 2px;
+  }
+</style>
+
+<div class="hero-swiper swiper" aria-label="Hero" role="region" aria-live="off">
+  <div class="swiper-wrapper">
+
+    <!-- Slide 1 -->
+    <div class="swiper-slide">
+      <picture class="hero-slide-media">
+        <source srcset="/images/uploads/hero-intro-desktop.jpg" media="(min-width: 1024px)">
+        <source srcset="/images/uploads/hero-intro-tablet.jpg"  media="(min-width: 600px)">
+        <img src="/images/uploads/hero-intro-mobile.jpg" alt="Hero intro" loading="eager" />
+      </picture>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="swiper-slide">
+      <picture class="hero-slide-media">
+        <source srcset="/images/uploads/hero1-desktop.jpg" media="(min-width: 1024px)">
+        <source srcset="/images/uploads/hero1-tablet.jpg"  media="(min-width: 600px)">
+        <img src="/images/uploads/hero1-mobile.jpg" alt="Hero slide 1" loading="lazy" />
+      </picture>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="swiper-slide">
+      <picture class="hero-slide-media">
+        <source srcset="/images/uploads/hero2-desktop.jpg" media="(min-width: 1024px)">
+        <source srcset="/images/uploads/hero2-tablet.jpg"  media="(min-width: 600px)">
+        <img src="/images/uploads/hero2-mobile.jpg" alt="Hero slide 2" loading="lazy" />
+      </picture>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="swiper-slide">
+      <picture class="hero-slide-media">
+        <source srcset="/images/uploads/hero3-desktop.jpg" media="(min-width: 1024px)">
+        <source srcset="/images/uploads/hero3-tablet.jpg"  media="(min-width: 600px)">
+        <img src="/images/uploads/hero3-mobile.jpg" alt="Hero slide 3" loading="lazy" />
+      </picture>
+    </div>
+
+  </div>
+
+  <a href="/contact" class="cta-button">{ctaText}</a>
+
+  <!-- Invisible but clickable nav -->
+  <div class="swiper-button-prev" aria-label="Previous slide"></div>
+  <div class="swiper-button-next" aria-label="Next slide"></div>
+</div>
+
+<script type="module" client:load>
+  import Swiper from 'https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.esm.browser.min.js';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  new Swiper('.hero-swiper', {
+    loop: true,
+    autoplay: reduce ? false : { delay: 5000, disableOnInteraction: false },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    keyboard: { enabled: true, onlyInViewport: true }
+    // pagination: { el: '.swiper-pagination', clickable: true }
+  });
+</script>

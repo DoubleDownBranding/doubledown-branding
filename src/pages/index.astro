@@ -1,56 +1,45 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSlider from '../components/HeroSlider.astro';
+import ClientSlider from '../components/ClientSlider.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SocialIcons from '../components/SocialIcons.astro';
+import CtaSplitSection from '../components/CtaSplitSection.astro'; // ✅ Correct name
 import { getEntryBySlug } from 'astro:content';
 
 const content = await getEntryBySlug('homepage', 'homepage');
-
 if (!content) {
   throw new Error('Homepage content not found.');
 }
-
 const { headline, cta } = content.data;
 ---
 
+<style>
+  body {
+    font-family: 'Gotham', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+</style>
 
-<html lang="en">
-  <head>
-    <title>Home - DoubleDown Branding</title>
-    <script>
-      // This script redirects invite_token links to the admin panel
-      const url = new URL(window.location.href);
-      const token = url.hash.match(/invite_token=([^&]+)/);
-      if (token) {
-        window.location.href = `/admin/#invite_token=${token[1]}`;
-      }
-    </script>
-  </head>
+<Header />
 
-  <body>
-    <BaseLayout>
-      <section style="text-align: center; padding: 4rem 1rem; background: var(--color-dark-blue); color: white;">
-        <h1>{headline}</h1>
-        <a href="/contact" style="display: inline-block; margin-top: 1rem; background: var(--color-red); color: white; padding: 0.75rem 1.5rem; border-radius: 4px;">
-          {cta}
-        </a>
-      </section>
+<!-- ✅ Hero section -->
+<HeroSlider ctaText={cta} />
 
-      <section style="padding: 2rem; text-align: center;">
-        <h2>Client Logos</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
-          <img src="/images/uploads/logo1.png" alt="Client 1" />
-          <img src="/images/uploads/logo2.png" alt="Client 2" />
-          <img src="/images/uploads/logo3.png" alt="Client 3" />
-        </div>
-      </section>
+<!-- ✅ Services Section -->
+<ServicesSection />
 
-      <section style="text-align: center; margin-top: 4rem;">
-        <h2>Stay Connected</h2>
-        <div>
-          <img src="/images/uploads/instagram.svg" width="32" />
-          <img src="/images/uploads/youtube.svg" width="32" />
-          <img src="/images/uploads/linkedin.svg" width="32" />
-        </div>
-      </section>
-    </BaseLayout>
-  </body>
-</html>
+<!-- ✅ Client Logos -->
+<ClientSlider />
+
+<!-- ✅ Split CTA Section (Picture + Text) -->
+<CtaSplitSection />
+
+<!-- ✅ Social Icons Section -->
+<SocialIcons />
+
+<!-- ✅ Footer -->
+<Footer />

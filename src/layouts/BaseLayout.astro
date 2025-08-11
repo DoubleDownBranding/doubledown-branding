@@ -2,19 +2,52 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 ---
-
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><slot name="title" /></title>
+
+    <!-- Global styles -->
     <link rel="stylesheet" href="/styles/global.css" />
+
+    <!-- Optional quality-of-life -->
+    <meta name="theme-color" content="#0D1A5A" />
   </head>
-  <body>
+
+  <body style="font-family: 'Gotham', sans-serif; background-color: #f6e4cc; margin: 0; padding: 0;">
+    <style>
+      :root {
+        --ink: #0D1A5A;
+        --paper: #f6e4cc;
+        --accent: #ef3741;
+      }
+      /* Page shell so footer stays at the bottom on short pages */
+      body {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+      }
+      /* Make sure images do not create layout gaps */
+      img { display: block; max-width: 100%; height: auto; }
+    </style>
+
     <Header />
-    <main>
+
+    <style>
+  main { padding-top: var(--header-h-desktop); }
+  @media (max-width: 768px) {
+    main { padding-top: 120px; } /* enough for 2 lines; tweak to taste */
+  }
+</style>
+
+
+    <!-- Skip link target -->
+    <main id="main" role="main" tabindex="-1">
       <slot />
     </main>
+
     <Footer />
   </body>
 </html>

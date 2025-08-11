@@ -1,17 +1,102 @@
 ---
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/contact', label: 'Contact' }
-];
+/* no script needed */
 ---
+<style>
+  :root {
+    --header-h-desktop: 88px;
+    --header-h-mobile: 64px;   /* base for single-line; we'll let it grow when wrapping */
+  }
 
-<header style="padding: 1rem;">
-  <nav>
-    {navLinks.map(link => (
-      <a href={link.href}>{link.label}</a>
-    ))}
-    <span style="float: right; font-weight: bold;">DoubleDown</span>
-  </nav>
-</header>
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10000;
+    background-color: #0D1A5A;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 2rem;
+    height: var(--header-h-desktop);
+  }
+
+  .logo { height: 56px; display:block; }
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 3rem;
+    margin: 0;
+    padding: 0;
+    /* desktop: single row, no wrap */
+    flex-wrap: nowrap;
+  }
+
+  li a {
+    position: relative;
+    color: #f6e4cc;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Gotham', sans-serif;
+    font-size: 2rem;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  li a::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #ef3741;
+    transition: width 0.1s ease;
+  }
+
+  li a:hover { color: #ef3741; }
+  li a:hover::after { width: 100%; }
+
+  /* MOBILE: wrap menu into 2 lines if needed */
+  @media (max-width: 1100px) {
+    nav {
+      /* allow header to grow with wrapped lines */
+      height: auto;
+      padding: 0.5rem 1rem 0.75rem;
+      flex-direction: column;            /* logo on top, menu below */
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo { height: 44px; }
+
+    ul {
+      width: 100%;
+      justify-content: center;
+      gap: 1rem 1.25rem;                 /* row-gap col-gap */
+      flex-wrap: wrap;                    /* <-- key: allow wrapping */
+      padding: 0 0.5rem;
+    }
+
+    li a {
+      font-size: 1.1rem;
+      line-height: 1.3;
+      /* allow breaking if needed (long words) */
+      white-space: normal;
+      word-break: keep-all;
+    }
+  }
+</style>
+
+<nav>
+  <a href="/">
+    <img src="public/images/uploads/logo.png" alt="Double Down Logo" class="logo" />
+  </a>
+  <ul>
+    <li><a href="/about">ABOUT</a></li>
+    <li><a href="/blog">RESEARCH</a></li>
+    <li><a href="/services">SERVICES</a></li>
+    <li><a href="/contact">CONTACT</a></li>
+  </ul>
+</nav>

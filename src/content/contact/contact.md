@@ -1,6 +1,5 @@
 ---
-title: Contact Us no gum diiiir
-intro: Let’s start your branding journey — reach out below. we have changed this
-  too bro yahoooooooooooooo!!!
-thank_you: Thanks! We'll get back to you soon. big big small small
+title: Let’s Build Something Legendary
+intro: Whether you're launching something new, rethinking your strategy, or just need a partner who gets it, we’re here to help you make the right moves.Fill in the details below and tell us where you’re headed. We’ll get back to you with next steps.
+thank_you: Thank you for reaching out, we'll contact you soon!
 ---
