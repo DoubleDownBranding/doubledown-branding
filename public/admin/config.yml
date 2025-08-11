@@ -29,18 +29,6 @@ collections:
           - { label: "Headline", name: "headline", widget: "string" }
           - { label: "CTA Text", name: "cta", widget: "string" }
 
-  - name: "about"
-    label: "About Page"
-    files:
-      - file: "src/content/about/about.md"
-        label: "About Text"
-        name: "about_content"
-        fields:
-          - { label: "Headline", name: "headline", widget: "string" }
-          - { label: "Body Text", name: "body", widget: "markdown" }
-          - { label: "CTA Text", name: "cta_text", widget: "string" }
-          - { label: "Thank You Message", name: "thank_you", widget: "string" }
-
   - name: "contact"
     label: "Contact Page"
     files:
