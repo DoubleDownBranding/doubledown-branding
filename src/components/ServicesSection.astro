@@ -1,122 +1,63 @@
 <section id="services" class="services-split">
   <style>
-    .services-split {
-      width: 100%;
-      background-color: #f6e4cc;
-      margin: 0;
-    }
+    .services-split { width:100%; background:#f6e4cc; margin:0; }
 
-    /* Layout shell */
     .services-inner {
-      display: flex;
-      flex-direction: column; /* default: stack for mobile */
-      align-items: stretch;
-      max-width: 2000px;
-      margin: 0 auto;
-      padding-inline: 16px; /* mobile gutters to center content visually */
+      display:grid;
+      grid-template-columns: 1fr;       /* mobile: stack */
+      max-width:2000px;
+      margin:0 auto;
+      align-items:stretch;
     }
 
-    /* Columns */
-    .col {
-      width: 100%;
-    }
+    .col { width:100%; }
 
-    /* Text column */
-    .text-col {
-      background-color: #0D1A5A;
-      color: #f6e4cc;
-      font-family: 'Gotham', sans-serif;
-      display: flex;
-      align-items: center;    /* vertical centering */
-      justify-content: center; /* horizontal centering */
-      padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem);
-      text-align: center;     /* center text on mobile */
-      order: 2; /* mobile: text second */
-    }
-    .text-wrap {
-      max-width: 600px;
-      width: 100%;
-      margin: 0 auto;
-    }
-    .text-col h2 {
-      font-size: clamp(1.8rem, 3.2vw, 2.5rem);
-      margin: 0 0 1.5rem 0;
-    }
-    .text-col p {
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      line-height: 1.6;
-      margin: 0 0 2rem 0;
-    }
-    .cta-btn {
-      display: inline-block;
-      background-color: #ef3741;
-      color: #f6e4cc;
-      padding: 0.6rem 1.4rem;
-      font-size: clamp(1.1rem, 2.6vw, 2rem);
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 1px;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .cta-btn:hover {
-      background-color: #f6e4cc;
-      color: #0D1A5A;
-      border-color: #0D1A5A;
-    }
-
-    /* Image column */
-    .image-col {
-      overflow: hidden;
-      background: #0D1A5A; /* fallback in case image is still loading */
-      order: 1; /* mobile: image first */
-    }
+    /* Image first on mobile */
+    .image-col { background:#0D1A5A; overflow:hidden; }
     .image-col img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      max-height: none;
-      object-fit: cover;
-      object-position: center;
+      display:block; width:100%; height:100%;
+      object-fit:cover; object-position:center;
     }
 
-    /* Desktop/tablet: side-by-side */
-    @media (min-width: 1100px) {
-      .services-inner {
-        flex-direction: row; /* split layout */
-        min-height: 560px;
-        padding-inline: 0; /* remove extra gutters on desktop */
-      }
-      .col {
-        width: 50%;
-      }
-      .image-col {
-        order: 1; /* desktop: image left */
-      }
-      .text-col {
-        order: 2; /* desktop: text right */
-        text-align: left; /* reset for desktop */
-      }
+    /* Text second on mobile (centered) */
+    .text-col {
+      background:#0D1A5A; color:#f6e4cc; font-family:'Gotham',sans-serif;
+      display:flex; align-items:center; justify-content:center;
+      text-align:center;
+      padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem);
+    }
+    .text-wrap { max-width:600px; width:100%; margin:0 auto; }
+    .text-col h2 { font-size:clamp(1.8rem,3.2vw,2.5rem); margin:0 0 1.5rem; }
+    .text-col p  { font-size:clamp(1rem,2vw,1.3rem); line-height:1.6; margin:0 0 2rem; }
+
+    .cta-btn {
+      display:inline-block; background:#ef3741; color:#f6e4cc;
+      padding:0.6rem 1.4rem; font-size:clamp(1.1rem,2.6vw,2rem);
+      font-weight:bold; text-decoration:none; border-radius:1px;
+      transition:all .2s ease; border:2px solid transparent;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .cta-btn:hover { background:#f6e4cc; color:#0D1A5A; border-color:#0D1A5A; }
+
+    /* Desktop: 2 columns */
+    @media (min-width:1100px) {
+      .services-inner { grid-template-columns: 1fr 1fr; min-height:560px; }
+      .text-col { text-align:left; } /* reset for desktop */
     }
   </style>
 
   <div class="services-inner">
-    <!-- Image first for mobile -->
+    <!-- MOBILE ORDER: image first -->
     <div class="col image-col">
-      <img
-        src="/images/uploads/services-section.jpg"
-        alt="Services visual"
-        loading="lazy"
-      />
+      <img src="/images/uploads/services-section.jpg" alt="Services visual" loading="lazy" />
     </div>
 
-    <!-- Text second for mobile -->
+    <!-- MOBILE ORDER: text second -->
     <div class="col text-col">
       <div class="text-wrap">
         <h2>Strategy, Design & Story that Pay Off</h2>
         <p>
-          We help focused teams build brands that lower costs and lift profit. 
+          We help focused teams build brands that lower costs and lift profit.
           Our work aligns your company around a clear brand strategy, then turns it into an identity,
           messaging, and design system that removes guesswork, reduces rework, and delivers a consistent experience customers trust.
           Services include brand strategy, positioning, brand identity design, messaging & brand story,

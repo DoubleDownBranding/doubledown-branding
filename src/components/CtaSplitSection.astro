@@ -1,119 +1,73 @@
 <section class="cta-split">
   <style>
-    .cta-split {
-      width: 100%;
-      background-color: #f6e4cc;
-      margin: 0;
-    }
+    .cta-split { width: 100%; background:#f6e4cc; margin:0; }
 
+    /* Use grid for reliable mobile/desktop layouts */
     .cta-inner {
-      display: flex;
-      flex-direction: column; /* mobile: stack */
-      align-items: stretch;
+      display: grid;
+      grid-template-columns: 1fr;         /* mobile: stack */
       max-width: 2000px;
       margin: 0 auto;
-      padding-inline: 16px;   /* mobile gutters so text doesn't skew */
+      align-items: stretch;
     }
 
     .col { width: 100%; }
 
-    /* Image column */
+    /* Image */
     .image-col {
-      order: 1; /* mobile: image first */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #f6e4cc;
-      overflow: hidden;
+      background:#f6e4cc;
+      overflow:hidden;
     }
     .image-col img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;   /* keeps poster intact */
-      object-position: center;
-      max-height: 520px;     /* prevents giant image on small screens */
+      display:block; width:100%; height:100%;
+      object-fit:contain; object-position:center;
+      max-height:520px; /* keeps poster controlled on small screens */
     }
 
-    /* Text column */
+    /* Text */
     .text-col {
-      order: 2; /* mobile: text second */
-      background-color: #f6e4cc;
-      color: #0D1A5A;
-      font-family: 'Gotham', sans-serif;
-      display: flex;
-      align-items: center;   /* vertical center */
-      justify-content: center; /* horizontal center in flex */
-      text-align: center;    /* center text lines */
+      background:#f6e4cc;
+      color:#0D1A5A;
+      font-family:'Gotham',sans-serif;
+      display:flex; align-items:center; justify-content:center;
+      text-align:center;  /* centered on mobile */
       padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem);
     }
-    .text-wrap {
-      max-width: 600px;
-      width: 100%;
-      margin: 0 auto;        /* lock the block dead-center */
-    }
-    .text-col h2 {
-      font-size: clamp(1.8rem, 3.2vw, 2.5rem);
-      margin: 0 0 1rem 0;
-    }
-    .text-col p {
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      line-height: 1.6;
-      margin: 0 0 2rem 0;
-    }
+    .text-wrap { max-width:600px; width:100%; margin:0 auto; }
+    .text-col h2 { font-size:clamp(1.8rem,3.2vw,2.5rem); margin:0 0 1rem; }
+    .text-col p  { font-size:clamp(1rem,2vw,1.3rem); line-height:1.6; margin:0 0 2rem; }
 
     .cta-btn {
-      display: inline-block;
-      background-color: #ef3741;
-      color: #f6e4cc;
-      padding: 0.75rem 2rem;
-      font-size: clamp(1.1rem, 2.4vw, 2rem);
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 1px;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-      -webkit-tap-highlight-color: transparent;
+      display:inline-block; background:#ef3741; color:#f6e4cc;
+      padding:0.75rem 2rem; font-size:clamp(1.1rem,2.4vw,2rem);
+      font-weight:bold; text-decoration:none; border-radius:1px;
+      transition:all .2s ease; border:2px solid transparent;
+      -webkit-tap-highlight-color:transparent;
     }
-    .cta-btn:hover {
-      background-color: #f6e4cc;
-      color: #0D1A5A;
-      border-color: #0D1A5A;
-    }
+    .cta-btn:hover { background:#f6e4cc; color:#0D1A5A; border-color:#0D1A5A; }
 
-    /* Desktop/tablet: split layout */
-    @media (min-width: 1100px) {
-      .cta-inner {
-        flex-direction: row;
-        min-height: 520px;
-        padding-inline: 0;   /* desktop uses your existing outer spacing */
-      }
-      .col { width: 50%; }
-      .image-col { order: 1; }         /* desktop: image left */
-      .text-col  { order: 2; text-align: left; } /* desktop: text right */
-      .image-col img { max-height: none; object-fit: contain; }
+    /* Desktop: 2 columns, image left, text right */
+    @media (min-width:1100px) {
+      .cta-inner { grid-template-columns: 1fr 1fr; min-height:520px; }
+      .text-col  { text-align:left; }  /* reset to left on desktop */
+      .image-col img { max-height:none; object-fit:contain; }
     }
   </style>
 
   <div class="cta-inner">
-    <!-- Image first on mobile -->
+    <!-- MOBILE ORDER: image first, text second -->
     <div class="col image-col">
-      <img
-        src="/images/uploads/homepagecta.png"
-        alt="Brand strategy session"
-        loading="lazy"
-      />
+      <img src="/images/uploads/homepagecta.png" alt="Brand strategy session" loading="lazy" />
     </div>
 
-    <!-- Text second on mobile -->
     <div class="col text-col">
       <div class="text-wrap">
         <h2>Where Big Visions Get Backed.</h2>
         <p>
-          We're a brand strategy and identity partner for companies that value focus. 
-          When your strategy is clear, every decision gets 
-          cheaper and your customer experience becomes consistent and coherent, which means higher conversion, stronger loyalty,
-          and better margins. We turn insight into systems: positioning, story, and design that your whole team can use.
+          We're a brand strategy and identity partner for companies that value focus.
+          When your strategy is clear, every decision gets cheaper and your customer experience becomes coherent,
+          which means higher conversion, stronger loyalty, and better margins. We turn insight into systems: positioning,
+          story, and design that your whole team can use.
         </p>
         <a href="/about" class="cta-btn">Our Why</a>
       </div>
