@@ -91,6 +91,17 @@
         max-height: none;         /* let it fill the half */
         object-fit: contain;      /* change to 'cover' if you prefer edge-to-edge */
       }
+      /* Mobile centering */
+    @media (max-width: 1099px) {
+       .text-col {
+     text-align: center;
+     align-items: center;
+     justify-content: center;
+  }
+  .text-wrap {
+    margin: 0 auto;
+     }
+  }
     }
   </style>
 
@@ -109,9 +120,9 @@
       <div class="text-wrap">
         <h2>Where Big Visions Get Backed.</h2>
         <p>
-        We’re a brand strategy and identity partner for companies that value focus. 
+        We're a brand strategy and identity partner for companies that value focus. 
         When your strategy is clear, every decision gets 
-        cheaper and your customer experience becomes consistent and coherent—which means higher conversion, stronger loyalty,
+        cheaper and your customer experience becomes consistent and coherent, which means higher conversion, stronger loyalty,
         and better margins. We turn insight into systems: positioning, story, and design that your whole team can use.
         </p>
         <a href="/about" class="cta-btn">"Our Why"</a>
