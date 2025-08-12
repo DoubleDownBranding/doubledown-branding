@@ -1,70 +1,102 @@
-<section id="services" class="services-split">
+<section id="services" class="services-split" aria-labelledby="services-title">
   <style>
-.services-split {
-  width: 100%;
-  background: #0D1A5A;       /* navy so edges match the block */
-  margin: 0;
-  padding: 0;                 /* no outer gutters = no beige strips */
-}
+    :root {
+      --navy: #0D1A5A;
+      --beige: #f6e4cc;
+      --red: #ef3741;
+    }
 
-.services-inner {
-  display: grid;
-  grid-template-columns: 1fr; /* mobile: stack */
-  max-width: 2000px;
-  margin: 0 auto;
-  align-items: stretch;
-}
+    .services-split {
+      width: 100%;
+      background: var(--navy);
+      margin: 0;
+      padding: 0;
+    }
+    .services-split, .services-split * { box-sizing: border-box; }
 
-.col { width: 100%; }
+    .services-inner {
+      display: grid;
+      grid-template-columns: 1fr; /* mobile: stack */
+      max-width: 2000px;
+      margin: 0 auto;
+      align-items: stretch;
+    }
 
-/* Image first on mobile */
-.image-col { background:#0D1A5A; overflow:hidden; }
-.image-col img {
-  display:block; width:100%; height:100%;
-  object-fit:cover; object-position:center;
-}
+    .col { width: 100%; }
 
-/* Text second on mobile (centered) */
-.text-col {
-  background:#0D1A5A; color:#f6e4cc; font-family:'Gotham',sans-serif;
-  display:flex; align-items:center; justify-content:center;
-  text-align:center;
-  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem); /* gutters on text only */
-}
-.text-wrap { max-width:600px; width:100%; margin:0 auto; }
-.text-col h2 { font-size:clamp(1.8rem,3.2vw,2.5rem); margin:0 0 1.5rem; }
-.text-col p  { font-size:clamp(1rem,2vw,1.3rem); line-height:1.6; margin:0 0 2rem; }
+    /* Image first on mobile */
+    .image-col { background: var(--navy); overflow: hidden; }
+    .image-col img {
+      display: block;
+      width: 100%;
+      height: auto;              /* fix: no collapse on mobile */
+      object-fit: cover;
+      object-position: center;
+    }
 
-.cta-btn {
-  display:inline-block; background:#ef3741; color:#f6e4cc;
-  padding:0.6rem 1.4rem; font-size:clamp(1.1rem,2.6vw,2rem);
-  font-weight:bold; text-decoration:none; border-radius:1px;
-  transition:all .2s ease; border:2px solid transparent;
-  -webkit-tap-highlight-color:transparent;
-}
-.cta-btn:hover { background:#f6e4cc; color:#0D1A5A; border-color:#0D1A5A; }
+    /* Text second on mobile (centered) */
+    .text-col {
+      background: var(--navy);
+      color: var(--beige);
+      font-family: 'Gotham', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem); /* gutters on text only */
+    }
+    .text-wrap { max-width: 600px; width: 100%; margin: 0 auto; }
+    .text-col, .image-col, .text-wrap { min-width: 0; }
+    .text-col h2 { font-size: clamp(1.8rem, 3.2vw, 2.5rem); margin: 0 0 1.5rem; }
+    .text-col { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    .text-col h2, .text-col p { overflow-wrap: break-word; hyphens: auto; }
+    .text-col p  { font-size: clamp(1rem, 2vw, 1.3rem); line-height: 1.6; margin: 0 0 2rem; }
 
-/* Desktop: 2 columns with no overflow */
-@media (min-width:1100px) {
-  .services-inner {
-    grid-template-columns: minmax(0,1fr) minmax(0,1fr);
-    min-height: 560px;
-  }
-  .text-col { text-align:left; } /* reset for desktop */
-}
+    .cta-btn {
+      display: inline-block;
+      background: var(--red);
+      color: var(--beige);
+      padding: 0.6rem 1.4rem;
+      font-size: clamp(1.1rem, 2.6vw, 2rem);
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 1px;
+      border: 2px solid transparent;
+      transition: transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cta-btn:hover { background: var(--beige); color: var(--navy); border-color: var(--navy); }
+    .cta-btn:active { transform: translateY(1px); }
+    .cta-btn:focus-visible { outline: 3px solid var(--beige); outline-offset: 2px; }
 
+    /* Desktop: 2 columns with equal height */
+    @media (min-width: 1100px) {
+      .services-inner {
+        grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+        min-height: 560px;
+      }
+      .text-col { text-align: left; }
+      .image-col img { height: 100%; } /* fill equal-height column */
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta-btn { transition: none; }
+    }
   </style>
 
   <div class="services-inner">
     <!-- MOBILE ORDER: image first -->
     <div class="col image-col">
-      <img src="/images/uploads/services-section.jpg" alt="Services visual" loading="lazy" />
+      <img
+        src="/images/uploads/services-section.jpg"
+        alt="" role="presentation" loading="lazy" decoding="async"
+      />
     </div>
 
     <!-- MOBILE ORDER: text second -->
     <div class="col text-col">
       <div class="text-wrap">
-        <h2>Strategy, Design & Story that Pay Off</h2>
+        <h2 id="services-title">Strategy, Design & Story that Pay Off</h2>
         <p>
           We help focused teams build brands that lower costs and lift profit.
           Our work aligns your company around a clear brand strategy, then turns it into an identity,
