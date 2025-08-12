@@ -13,15 +13,26 @@ import Footer from '../components/Footer.astro';
       : <title>DoubleDown Branding</title>
     }
 
-    <!-- Google Analytics (GA4) -->
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RJKTN58533"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', 'G-RJKTN58533');
-    </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJKTN58533"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+
+  // Consent Mode v2: default to denied until user acts
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    // security_storage is generally fine to grant
+    security_storage: 'granted'
+  });
+
+  gtag('js', new Date());
+  gtag('config', 'G-RJKTN58533');
+</script>
+
 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -59,7 +70,80 @@ import Footer from '../components/Footer.astro';
     <main id="main" role="main" tabindex="-1">
       <slot />
     </main>
-
+    
     <Footer />
+
+<!-- Minimal consent banner -->
+<style>
+  #dd-consent[hidden] { display: none !important; }
+  #dd-consent {
+    position: fixed; inset: auto 0 0 0; z-index: 99999;
+    display: flex; justify-content: center; align-items: flex-end;
+    background: rgba(0,0,0,.25);
+  }
+  #dd-consent .ddc-box {
+    background: #0D1A5A; color: #f6e4cc;
+    margin: 0.5rem; padding: 1rem;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 4px; max-width: 680px; width: calc(100% - 1rem);
+    font-family: 'Gotham', sans-serif;
+  }
+  #dd-consent p { margin: 0; line-height: 1.5; }
+  #dd-consent .ddc-actions { display: flex; gap: .5rem; margin-top: .75rem; }
+  #dd-consent button {
+    cursor: pointer; border-radius: 2px; font-weight: 700; border: 2px solid transparent;
+    padding: .6rem 1rem;
+  }
+  #dd-accept { background: #ef3741; color: #f6e4cc; }
+  #dd-reject { background: transparent; color: #f6e4cc; border-color: #f6e4cc; }
+</style>
+
+<div id="dd-consent" hidden>
+  <div class="ddc-box">
+    <p>We use cookies to understand traffic and improve your experience. You can accept or reject analytics cookies.</p>
+    <div class="ddc-actions">
+      <button id="dd-accept" type="button">Accept</button>
+      <button id="dd-reject" type="button">Reject</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const KEY = 'dd-consent-v1';
+    const banner = document.getElementById('dd-consent');
+    const saved = localStorage.getItem(KEY);
+
+    function grant() {
+      gtag('consent','update', {
+        ad_storage: 'granted',
+        analytics_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted'
+      });
+      localStorage.setItem(KEY, 'granted');
+      banner.hidden = true;
+    }
+    function deny() {
+      gtag('consent','update', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+      localStorage.setItem(KEY, 'denied');
+      banner.hidden = true;
+    }
+
+    if (!saved) {
+      banner.hidden = false;
+    }
+
+    document.getElementById('dd-accept')?.addEventListener('click', grant);
+    document.getElementById('dd-reject')?.addEventListener('click', deny);
+  })();
+</script>
+
+
   </body>
 </html>
