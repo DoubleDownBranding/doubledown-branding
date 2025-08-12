@@ -8,18 +8,15 @@ import Footer from '../components/Footer.astro';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Page title: if the page provides <title slot="title">, render it directly; otherwise fallback -->
     {Astro.slots.has('title')
       ? <slot name="title" />
       : <title>DoubleDown Branding</title>
     }
 
-    <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <meta name="theme-color" content="#0D1A5A" />
 
-    <!-- Global styles -->
     <link rel="stylesheet" href="/styles/global.css" />
   </head>
 
@@ -27,7 +24,7 @@ import Footer from '../components/Footer.astro';
     <style>
       :root {
         --ink: #0D1A5A;
-        --paper: #f6e4cc;   /* site background */
+        --paper: #f6e4cc;
         --accent: #ef3741;
       }
       /* Page shell so footer stays at the bottom on short pages */
@@ -36,13 +33,14 @@ import Footer from '../components/Footer.astro';
         display: grid;
         grid-template-rows: auto 1fr auto;
       }
-      /* Avoid image layout shifts */
       img { display: block; max-width: 100%; height: auto; }
 
       /* Keep content clear of fixed header */
       main { padding-top: var(--header-h-desktop); }
-      @media (max-width: 768px) {
-        main { padding-top: 120px; }
+
+      /* Match Header.astro breakpoint; allow for 2-line nav on larger phones/tablets */
+      @media (max-width: 1100px) {
+        main { padding-top: clamp(110px, 18vw, 200px); }
       }
     </style>
 
