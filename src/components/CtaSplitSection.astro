@@ -8,17 +8,19 @@
 
     .cta-inner {
       display: flex;
-      flex-direction: column;     /* mobile: stack */
+      flex-direction: column; /* mobile: stack */
       align-items: stretch;
       max-width: 2000px;
       margin: 0 auto;
     }
 
-    .col { width: 100%; }
+    .col {
+      width: 100%;
+    }
 
     /* Image column */
     .image-col {
-      order: 2;                   /* mobile: image after text */
+      order: 1; /* mobile: image first */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -29,24 +31,27 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;        /* keeps your poster intact */
+      object-fit: contain;
       object-position: center;
-      max-height: 520px;          /* prevents giant image on small screens */
+      max-height: 520px;
     }
 
     /* Text column */
     .text-col {
-      order: 1;                   /* mobile: text first */
+      order: 2; /* mobile: text second */
       background-color: #f6e4cc;
       color: #0D1A5A;
       font-family: 'Gotham', sans-serif;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: left;
+      align-items: center; /* vertical center */
+      justify-content: center; /* horizontal center */
+      text-align: center; /* center text */
       padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem);
     }
-    .text-wrap { max-width: 600px; }
+    .text-wrap {
+      max-width: 600px;
+      margin: 0 auto;
+    }
     .text-col h2 {
       font-size: clamp(1.8rem, 3.2vw, 2.5rem);
       margin: 0 0 1rem 0;
@@ -76,37 +81,31 @@
       border-color: #0D1A5A;
     }
 
-    /* Desktop / tablet: split layout with image left, text right */
+    /* Desktop/tablet: split layout */
     @media (min-width: 1100px) {
       .cta-inner {
         flex-direction: row;
-        min-height: 520px;        /* presence without forcing 800px */
+        min-height: 520px;
       }
-      .col { width: 50%; }
-
-      .image-col { order: 1; }    /* desktop: image left */
-      .text-col  { order: 2; }    /* desktop: text right */
-
+      .col {
+        width: 50%;
+      }
+      .image-col {
+        order: 1; /* desktop: image left */
+      }
+      .text-col {
+        order: 2; /* desktop: text right */
+        text-align: left; /* reset desktop alignment */
+      }
       .image-col img {
-        max-height: none;         /* let it fill the half */
-        object-fit: contain;      /* change to 'cover' if you prefer edge-to-edge */
+        max-height: none;
+        object-fit: contain;
       }
-      /* Mobile centering */
-    @media (max-width: 1099px) {
-       .text-col {
-     text-align: center;
-     align-items: center;
-     justify-content: center;
-  }
-  .text-wrap {
-    margin: 0 auto;
-     }
-  }
     }
   </style>
 
   <div class="cta-inner">
-    <!-- Left: Image (on desktop) -->
+    <!-- Image first on mobile -->
     <div class="col image-col">
       <img
         src="/images/uploads/homepagecta.png"
@@ -115,17 +114,17 @@
       />
     </div>
 
-    <!-- Right: Text (on desktop) -->
+    <!-- Text second on mobile -->
     <div class="col text-col">
       <div class="text-wrap">
         <h2>Where Big Visions Get Backed.</h2>
         <p>
-        We're a brand strategy and identity partner for companies that value focus. 
-        When your strategy is clear, every decision gets 
-        cheaper and your customer experience becomes consistent and coherent, which means higher conversion, stronger loyalty,
-        and better margins. We turn insight into systems: positioning, story, and design that your whole team can use.
+          We're a brand strategy and identity partner for companies that value focus. 
+          When your strategy is clear, every decision gets 
+          cheaper and your customer experience becomes consistent and coherent, which means higher conversion, stronger loyalty,
+          and better margins. We turn insight into systems: positioning, story, and design that your whole team can use.
         </p>
-        <a href="/about" class="cta-btn">"Our Why"</a>
+        <a href="/about" class="cta-btn">Our Why</a>
       </div>
     </div>
   </div>

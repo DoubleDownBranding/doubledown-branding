@@ -105,18 +105,9 @@ const socialLinks = [
     max-width: 36ch;
   }
 
-  /* Tablet */
-  @media (max-width: 1024px) {
-    .social-section {
-      grid-template-columns: repeat(2, minmax(220px, 1fr));
-    }
-    .with-divider {
-      border-right: none; /* avoid odd middle divider on 2-col */
-    }
-  }
 
   /* Mobile */
-  @media (max-width: 720px) {
+  @media (max-width: 1024px) {
     .social-section {
       grid-template-columns: 1fr;
       gap: 1.25rem;
