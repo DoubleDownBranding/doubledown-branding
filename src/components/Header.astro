@@ -116,6 +116,23 @@
     }
   })();
 </script>
+<script is:inline>
+  (function () {
+    const root = document.documentElement;
+    const nav = document.querySelector('nav');
+    function setHeaderVar() {
+      if (!nav) return;
+      const h = nav.offsetHeight || 88;
+      root.style.setProperty('--dd-header-h', h + 'px');
+    }
+    setHeaderVar();
+    // Recalculate on resize and after fonts load (so wrapped menus are covered)
+    window.addEventListener('resize', setHeaderVar, { passive: true });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(setHeaderVar);
+    }
+  })();
+</script>
 
 <!-- Auto-spacer: only adds space on pages that DON'T use BaseLayout -->
 <script is:inline>

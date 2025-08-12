@@ -45,6 +45,8 @@ import Footer from '../components/Footer.astro';
         --ink: #0D1A5A;
         --paper: #f6e4cc;
         --accent: #ef3741;
+        /* will be set dynamically from the header script; fallback provided below */
+        --dd-header-h: clamp(96px, 12vw, 160px);
       }
 
       /* Hardening + prevent horizontal scroll */
@@ -59,19 +61,32 @@ import Footer from '../components/Footer.astro';
       }
       img { display: block; max-width: 100%; height: auto; }
 
-      /* Keep content clear of fixed header */
-      main { padding-top: var(--header-h-desktop); }
+      /* Keep content clear of the fixed header using the measured height */
+      main { padding-top: var(--dd-header-h); }
 
-      /* Avoid extra gap when first child has top margin */
-      main > *:first-child { margin-top: 0 !important; }
-
-      /* Match Header.astro breakpoint; allow for 2-line nav on larger phones/tablets */
-      @media (max-width: 1100px) {
-        main { padding-top: clamp(250px, 18vw, 300px); }
-      }
+      /* Avoid extra gap when the first child has a top margin */
+      :where(main) > :first-child { margin-top: 0 !important; }
     </style>
 
     <Header />
+
+    <!-- Measure the real header height and store it in --dd-header-h -->
+    <script is:inline>
+      (function () {
+        const root = document.documentElement;
+        const nav  = document.querySelector('nav');
+        function setHeaderVar() {
+          if (!nav) return;
+          const h = nav.offsetHeight || 96;
+          root.style.setProperty('--dd-header-h', h + 'px');
+        }
+        setHeaderVar();
+        window.addEventListener('resize', setHeaderVar, { passive: true });
+        if (document.fonts && document.fonts.ready) {
+          document.fonts.ready.then(setHeaderVar);
+        }
+      })();
+    </script>
 
     <main id="main" role="main" tabindex="-1">
       <slot />
