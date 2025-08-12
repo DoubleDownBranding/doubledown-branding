@@ -1,11 +1,12 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
 import HeroSlider from '../components/HeroSlider.astro';
 import ClientSlider from '../components/ClientSlider.astro';
 import ServicesSection from '../components/ServicesSection.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
 import SocialIcons from '../components/SocialIcons.astro';
-import CtaSplitSection from '../components/CtaSplitSection.astro'; // ✅ Correct name
+import CtaSplitSection from '../components/CtaSplitSection.astro';
+
 import { getEntryBySlug } from 'astro:content';
 
 const content = await getEntryBySlug('homepage', 'homepage');
@@ -15,31 +16,21 @@ if (!content) {
 const { headline, cta } = content.data;
 ---
 
-<style>
-  body {
-    font-family: 'Gotham', sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-  }
-</style>
+<BaseLayout>
+  <title slot="title">DoubleDown Branding — Strategic Branding & Visual Systems</title>
 
-<Header />
+  <!-- Hero -->
+  <HeroSlider ctaText={cta} />
 
-<!-- ✅ Hero section -->
-<HeroSlider ctaText={cta} />
+  <!-- Services -->
+  <ServicesSection />
 
-<!-- ✅ Services Section -->
-<ServicesSection />
+  <!-- Client Logos -->
+  <ClientSlider />
 
-<!-- ✅ Client Logos -->
-<ClientSlider />
+  <!-- Split CTA -->
+  <CtaSplitSection />
 
-<!-- ✅ Split CTA Section (Picture + Text) -->
-<CtaSplitSection />
-
-<!-- ✅ Social Icons Section -->
-<SocialIcons />
-
-<!-- ✅ Footer -->
-<Footer />
+  <!-- Social Icons -->
+  <SocialIcons />
+</BaseLayout>
