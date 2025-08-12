@@ -1,4 +1,12 @@
-node_modules
+# overwrite .gitignore with the correct content
+cat > .gitignore << 'EOF'
+# dependencies
+node_modules/
 
-# Local Netlify folder
-.netlify
+# local Netlify data
+.netlify/
+
+# build output
+.astro/
+dist/
+EOF
