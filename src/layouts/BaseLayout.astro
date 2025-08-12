@@ -46,6 +46,11 @@ import Footer from '../components/Footer.astro';
         --paper: #f6e4cc;
         --accent: #ef3741;
       }
+
+      /* Hardening + prevent horizontal scroll */
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body { overflow-x: hidden; width: 100%; }
+
       /* Page shell so footer stays at the bottom on short pages */
       body {
         min-height: 100vh;
@@ -56,6 +61,9 @@ import Footer from '../components/Footer.astro';
 
       /* Keep content clear of fixed header */
       main { padding-top: var(--header-h-desktop); }
+
+      /* Avoid extra gap when first child has top margin */
+      main > *:first-child { margin-top: 0 !important; }
 
       /* Match Header.astro breakpoint; allow for 2-line nav on larger phones/tablets */
       @media (max-width: 1100px) {
@@ -147,11 +155,10 @@ import Footer from '../components/Footer.astro';
         if (saved === 'granted') accept();
         if (saved === 'denied') reject();
 
-        // Optional: expose a helper to reopen the banner from a footer link
+        // Optional: reopen from a footer link via window.ddOpenConsent()
         window.ddOpenConsent = function () {
           try { localStorage.removeItem(KEY); } catch (e) {}
           banner.hidden = false;
-          // while open, tracking is still denied
           gtag('consent','update', { analytics_storage: 'denied', ad_storage: 'denied' });
         };
       })();
