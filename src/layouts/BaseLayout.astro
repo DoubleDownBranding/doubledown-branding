@@ -61,11 +61,7 @@ import Footer from '../components/Footer.astro';
       }
       img { display: block; max-width: 100%; height: auto; }
 
-      /* Keep content clear of the fixed header using the measured height */
-      main { padding-top: var(--dd-header-h); }
-
-      /* Avoid extra gap when the first child has a top margin */
-      :where(main) > :first-child { margin-top: 0 !important; }
+      
     </style>
 
     <Header />
