@@ -12,11 +12,10 @@
       align-items: stretch;
       max-width: 2000px;
       margin: 0 auto;
+      padding-inline: 16px;   /* mobile gutters so text doesn't skew */
     }
 
-    .col {
-      width: 100%;
-    }
+    .col { width: 100%; }
 
     /* Image column */
     .image-col {
@@ -31,9 +30,9 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: contain;   /* keeps poster intact */
       object-position: center;
-      max-height: 520px;
+      max-height: 520px;     /* prevents giant image on small screens */
     }
 
     /* Text column */
@@ -43,14 +42,15 @@
       color: #0D1A5A;
       font-family: 'Gotham', sans-serif;
       display: flex;
-      align-items: center; /* vertical center */
-      justify-content: center; /* horizontal center */
-      text-align: center; /* center text */
+      align-items: center;   /* vertical center */
+      justify-content: center; /* horizontal center in flex */
+      text-align: center;    /* center text lines */
       padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem);
     }
     .text-wrap {
       max-width: 600px;
-      margin: 0 auto;
+      width: 100%;
+      margin: 0 auto;        /* lock the block dead-center */
     }
     .text-col h2 {
       font-size: clamp(1.8rem, 3.2vw, 2.5rem);
@@ -86,21 +86,12 @@
       .cta-inner {
         flex-direction: row;
         min-height: 520px;
+        padding-inline: 0;   /* desktop uses your existing outer spacing */
       }
-      .col {
-        width: 50%;
-      }
-      .image-col {
-        order: 1; /* desktop: image left */
-      }
-      .text-col {
-        order: 2; /* desktop: text right */
-        text-align: left; /* reset desktop alignment */
-      }
-      .image-col img {
-        max-height: none;
-        object-fit: contain;
-      }
+      .col { width: 50%; }
+      .image-col { order: 1; }         /* desktop: image left */
+      .text-col  { order: 2; text-align: left; } /* desktop: text right */
+      .image-col img { max-height: none; object-fit: contain; }
     }
   </style>
 

@@ -3,7 +3,7 @@
 <style>
   :root {
     --header-h-desktop: 88px;
-    --header-h-mobile: 64px;   /* base for single-line; we'll let it grow when wrapping */
+    --header-h-mobile: 64px; /* base; actual height can grow when menu wraps */
   }
 
   nav {
@@ -20,7 +20,7 @@
     height: var(--header-h-desktop);
   }
 
-  .logo { height: 56px; display:block; }
+  .logo { height: 56px; display: block; }
 
   ul {
     list-style: none;
@@ -28,8 +28,7 @@
     gap: 3rem;
     margin: 0;
     padding: 0;
-    /* desktop: single row, no wrap */
-    flex-wrap: nowrap;
+    flex-wrap: nowrap; /* desktop: single row, no wrap */
   }
 
   li a {
@@ -57,40 +56,38 @@
   li a:hover { color: #ef3741; }
   li a:hover::after { width: 100%; }
 
-  /* MOBILE: wrap menu into 2 lines if needed */
+  /* MOBILE: allow wrap & scale for big phones */
   @media (max-width: 1100px) {
     nav {
-      /* allow header to grow with wrapped lines */
-      height: auto;
+      height: auto; /* let header grow if menu wraps to 2 lines */
       padding: 0.5rem 1rem 0.75rem;
-      flex-direction: column;            /* logo on top, menu below */
+      flex-direction: column;  /* logo on top, menu below */
       align-items: center;
       gap: 0.5rem;
     }
 
-    .logo {height: clamp(44px, 9vw, 56px);}
+    .logo { height: clamp(44px, 9vw, 56px); }
 
     ul {
       width: 100%;
       justify-content: center;
-      gap: 1rem 1.25rem;                 /* row-gap col-gap */
-      flex-wrap: wrap;                    /* <-- key: allow wrapping */
+      gap: 1rem 1.25rem;   /* row-gap col-gap */
+      flex-wrap: wrap;     /* <-- allow wrapping */
       padding: 0 0.5rem;
     }
 
     li a {
       font-size: clamp(1.1rem, 6vw, 1.6rem);
       line-height: 1.3;
-      /* allow breaking if needed (long words) */
-      white-space: normal;
+      white-space: normal; /* allow break if needed */
       word-break: keep-all;
     }
   }
 </style>
 
-<nav>
+<nav aria-label="Primary">
   <a href="/">
-    <!-- Fix case to match file on Netlify -->
+    <!-- Case must match file on Netlify -->
     <img src="/images/uploads/Logo.png" alt="Double Down Logo" class="logo" />
   </a>
   <ul>
@@ -106,7 +103,7 @@
 <script>
   (function () {
     try {
-      // If an invite link lands anywhere with #invite_token, send it to /admin with the token intact
+      // If an invite link lands anywhere with #invite_token, route it to /admin with token intact
       if (location.hash && location.hash.indexOf('invite_token=') !== -1) {
         var target = '/admin/' + location.hash;
         if (window.location.pathname !== '/admin/') {
@@ -117,5 +114,40 @@
     } catch (e) {
       /* no-op */
     }
+  })();
+</script>
+
+<!-- Auto-spacer: only adds space on pages that DON'T use BaseLayout -->
+<script is:inline>
+  (function () {
+    // Pages using BaseLayout set data-uses-baselayout="true" on <body>; skip spacer there
+    if (document.body && document.body.getAttribute('data-uses-baselayout') === 'true') return;
+
+    function ensureHeaderSpacer() {
+      var header = document.querySelector('nav');
+      if (!header) return;
+
+      // Find or create a spacer right after the header
+      var next = header.nextElementSibling;
+      var spacer = (next && next.classList && next.classList.contains('header-spacer'))
+        ? next
+        : (function () {
+            var d = document.createElement('div');
+            d.className = 'header-spacer';
+            header.parentNode.insertBefore(d, header.nextSibling);
+            return d;
+          })();
+
+      // Match spacer to the header's current height (handles 1-line/2-line nav on big phones)
+      var h = Math.ceil(header.getBoundingClientRect().height);
+      spacer.style.height = h + 'px';
+      spacer.style.width = '100%';
+      spacer.style.pointerEvents = 'none';
+      spacer.setAttribute('aria-hidden', 'true');
+    }
+
+    document.addEventListener('DOMContentLoaded', ensureHeaderSpacer);
+    window.addEventListener('load', ensureHeaderSpacer);
+    window.addEventListener('resize', ensureHeaderSpacer);
   })();
 </script>

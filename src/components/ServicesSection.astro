@@ -9,10 +9,11 @@
     /* Layout shell */
     .services-inner {
       display: flex;
-      flex-direction: column;           /* default: stack for mobile */
+      flex-direction: column; /* default: stack for mobile */
       align-items: stretch;
       max-width: 2000px;
       margin: 0 auto;
+      padding-inline: 16px; /* mobile gutters to center content visually */
     }
 
     /* Columns */
@@ -26,14 +27,16 @@
       color: #f6e4cc;
       font-family: 'Gotham', sans-serif;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: center;    /* vertical centering */
+      justify-content: center; /* horizontal centering */
       padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem);
-      text-align: left;
+      text-align: center;     /* center text on mobile */
       order: 2; /* mobile: text second */
     }
     .text-wrap {
       max-width: 600px;
+      width: 100%;
+      margin: 0 auto;
     }
     .text-col h2 {
       font-size: clamp(1.8rem, 3.2vw, 2.5rem);
@@ -81,8 +84,9 @@
     /* Desktop/tablet: side-by-side */
     @media (min-width: 1100px) {
       .services-inner {
-        flex-direction: row;            /* split layout */
+        flex-direction: row; /* split layout */
         min-height: 560px;
+        padding-inline: 0; /* remove extra gutters on desktop */
       }
       .col {
         width: 50%;
@@ -92,18 +96,7 @@
       }
       .text-col {
         order: 2; /* desktop: text right */
-      }
-    }
-
-    /* Mobile centering */
-    @media (max-width: 1099px) {
-      .text-col {
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-      }
-      .text-wrap {
-        margin: 0 auto;
+        text-align: left; /* reset for desktop */
       }
     }
   </style>
