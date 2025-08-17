@@ -18,8 +18,11 @@ const { headline, cta } = content.data;
 
 <BaseLayout>
   <title slot="title">DoubleDown Branding — Strategic Branding & Visual Systems</title>
-  <!-- ✅ Canonical for homepage -->
-  <link slot="head" rel="canonical" href="https://doubledownbranding.com/" />
+  <!-- Head tags for canonical signals -->
+  <Fragment slot="head">
+    <link rel="canonical" href="https://doubledownbranding.com/" />
+    <meta property="og:url" content="https://doubledownbranding.com/" />
+  </Fragment>
 
   <!-- Hero -->
   <HeroSlider ctaText={cta} />
