@@ -2,7 +2,17 @@
   publish = "dist"
   command = "npm run build"
 
+# Keep your existing admin SPA route
 [[redirects]]
   from = "/admin/*"
   to = "/admin/index.html"
   status = 200
+
+# Canonicalize hosts to https://doubledownbranding.com
+# (catches the Netlify subdomain and www)
+[[redirects]]
+  from = "/*"
+  to = "https://doubledownbranding.com/:splat"
+  status = 301
+  force = true
+  conditions = { Host = ["doubledownbranding.netlify.app", "www.doubledownbranding.com"] }
