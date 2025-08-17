@@ -1,1 +1,1 @@
-https://doubledownbranding.netlify.app/*  https://www.doubledownbranding.com/:splat  301!
+printf "https://doubledownbranding.netlify.app/* https://doubledownbranding.com/:splat 301!\nhttps://www.doubledownbranding.com/* https://doubledownbranding.com/:splat 301!\nhttp://doubledownbranding.com/* https://doubledownbranding.com/:splat 301!\nhttp://www.doubledownbranding.com/* https://doubledownbranding.com/:splat 301!\n" > public/_redirects
