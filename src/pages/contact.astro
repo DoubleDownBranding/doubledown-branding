@@ -9,6 +9,11 @@ const { title, intro, thank_you } = content.data;
 ---
 <BaseLayout>
   <title slot="title">Contact - DoubleDown Branding</title>
+  <!-- Head tags for canonical signals -->
+  <Fragment slot="head">
+    <link rel="canonical" href="https://doubledownbranding.com/contact/" />
+    <meta property="og:url" content="https://doubledownbranding.com/contact/" />
+  </Fragment>
 
   <style>
     :root { --ink:#0D1A5A; --paper:#f6e4cc; --accent:#ef3741; --radius:4px; --gap-lg:7rem; --gap-md:2rem; --gap-sm:1rem; }
