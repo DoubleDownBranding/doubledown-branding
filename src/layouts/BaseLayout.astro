@@ -13,6 +13,9 @@ import Footer from '../components/Footer.astro';
       : <title>DoubleDown Branding</title>
     }
 
+    <!-- ✅ Allow pages to inject head tags (e.g., canonical) -->
+    <slot name="head" />
+
     <!-- GA4 (loads, but blocked until user accepts) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RJKTN58533"></script>
     <script is:inline>
@@ -60,8 +63,6 @@ import Footer from '../components/Footer.astro';
         grid-template-rows: auto 1fr auto;
       }
       img { display: block; max-width: 100%; height: auto; }
-
-      
     </style>
 
     <Header />
