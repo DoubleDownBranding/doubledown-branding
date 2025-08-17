@@ -16,6 +16,16 @@ import Footer from '../components/Footer.astro';
     <!-- ✅ Allow pages to inject head tags (e.g., canonical) -->
     <slot name="head" />
 
+    <!-- ✅ Site-wide JSON-LD with canonical homepage URL -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "DoubleDown Branding",
+      "url": "https://doubledownbranding.com/"
+    }
+    </script>
+
     <!-- GA4 (loads, but blocked until user accepts) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RJKTN58533"></script>
     <script is:inline>
