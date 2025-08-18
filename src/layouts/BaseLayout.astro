@@ -31,8 +31,6 @@ import Footer from '../components/Footer.astro';
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){ dataLayer.push(arguments); }
-
-      // Consent Mode v2: default to DENIED (nothing tracks until Accept)
       gtag('consent', 'default', {
         ad_storage: 'denied',
         analytics_storage: 'denied',
@@ -40,7 +38,6 @@ import Footer from '../components/Footer.astro';
         ad_personalization: 'denied',
         security_storage: 'granted'
       });
-
       gtag('js', new Date());
       gtag('config', 'G-RJKTN58533', { anonymize_ip: true });
     </script>
@@ -52,6 +49,10 @@ import Footer from '../components/Footer.astro';
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <!-- ✅ Added: classic ICO links -->
+    <link rel="icon" sizes="any" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+
     <meta property="og:site_name" content="DoubleDown Branding" />
     <script type="application/ld+json">
     {
@@ -79,20 +80,11 @@ import Footer from '../components/Footer.astro';
         --ink: #0D1A5A;
         --paper: #f6e4cc;
         --accent: #ef3741;
-        /* will be set dynamically from the header script; fallback provided below */
         --dd-header-h: clamp(96px, 12vw, 160px);
       }
-
-      /* Hardening + prevent horizontal scroll */
       *, *::before, *::after { box-sizing: border-box; }
       html, body { overflow-x: hidden; width: 100%; }
-
-      /* Page shell so footer stays at the bottom on short pages */
-      body {
-        min-height: 100vh;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-      }
+      body { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
       img { display: block; max-width: 100%; height: auto; }
     </style>
 
@@ -162,9 +154,7 @@ import Footer from '../components/Footer.astro';
         var KEY = 'dd-consent-v1';
         var banner = document.getElementById('dd-consent');
         var saved = null;
-
         try { saved = localStorage.getItem(KEY); } catch (e) {}
-
         function accept() {
           gtag('consent','update', {
             ad_storage: 'granted',
@@ -185,20 +175,14 @@ import Footer from '../components/Footer.astro';
           try { localStorage.setItem(KEY, 'denied'); } catch (e) {}
           banner.hidden = true;
         }
-
         if (!saved) banner.hidden = false;
-
         document.addEventListener('click', function (e) {
           var t = e.target;
           if (t && t.id === 'dd-accept') accept();
           if (t && t.id === 'dd-reject') reject();
         });
-
-        // Respect previous choice on load
         if (saved === 'granted') accept();
         if (saved === 'denied') reject();
-
-        // Optional: reopen from a footer link via window.ddOpenConsent()
         window.ddOpenConsent = function () {
           try { localStorage.removeItem(KEY); } catch (e) {}
           banner.hidden = false;
