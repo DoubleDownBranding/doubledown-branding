@@ -47,6 +47,27 @@ import Footer from '../components/Footer.astro';
 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <!-- ✅ Added: extra favicon sizes + apple touch + site name + org logo JSON-LD -->
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta property="og:site_name" content="DoubleDown Branding" />
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Organization",
+      "name":"DoubleDown Branding",
+      "url":"https://doubledownbranding.com/",
+      "logo":{
+        "@type":"ImageObject",
+        "url":"https://doubledownbranding.com/favicon-192.png",
+        "width":192,
+        "height":192
+      }
+    }
+    </script>
+
     <meta name="theme-color" content="#0D1A5A" />
 
     <link rel="stylesheet" href="/styles/global.css" />
